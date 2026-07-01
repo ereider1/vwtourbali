@@ -47,6 +47,10 @@ export default function Header() {
               Book Now
             </a>
 
+            <a href="#contact" className="btn-primary hidden text-sm sm:inline-flex">
+              WhatsApp Bobby
+            </a>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

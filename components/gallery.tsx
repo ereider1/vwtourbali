@@ -6,37 +6,37 @@ import { useState } from "react";
 const galleryImages = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1537225228614-b4fad34a0b60?w=600&q=80",
+    src: "/gallerypics/bali_vw_01.jpg",
     alt: "Temple visit",
     category: "Cultural",
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    src: "/gallerypics/bali_vw_02.jpg",
     alt: "Mountain views",
     category: "Adventure",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80",
+    src: "/gallerypics/bali_vw_03.jpg",
     alt: "Beach sunset",
     category: "Beach",
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80",
+    src: "/gallerypics/bali_vw_04.jpg",
     alt: "Rice terraces",
     category: "Landscape",
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1520909895917-c6400ca199e7?w=600&q=80",
+    src: "/gallerypics/bali_vw_05.jpg",
     alt: "Local market",
     category: "Cultural",
   },
   {
     id: 6,
-    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+    src: "/gallerypics/bali_vw_06.jpg",
     alt: "Waterfall",
     category: "Adventure",
   },

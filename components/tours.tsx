@@ -12,7 +12,7 @@ const tours = [
     distance: "35 km",
     price: "$89",
     description: "Start your day with a breathtaking sunrise tour through Bali's countryside.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80",
+    image: "/gallerypics/bali_vw_01.jpg",
     highlights: ["Sunrise viewpoint", "Traditional villages", "Local market visit"],
   },
   {
@@ -23,7 +23,7 @@ const tours = [
     distance: "50 km",
     price: "$129",
     description: "Immerse yourself in Bali's rich culture with visits to temples and local communities.",
-    image: "https://images.unsplash.com/photo-1537225228614-b4fad34a0b60?w=500&q=80",
+    image: "/gallerypics/bali_vw_02.jpg",
     highlights: ["Ancient temples", "Cultural demonstrations", "Lunch included"],
   },
   {
@@ -34,7 +34,7 @@ const tours = [
     distance: "45 km",
     price: "$109",
     description: "Visit Bali's most beautiful beaches and secret coves in one unforgettable day.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80",
+    image: "/gallerypics/bali_vw_03.jpg",
     highlights: ["Multiple beaches", "Water activities", "Sunset views"],
   },
   {
@@ -45,7 +45,7 @@ const tours = [
     distance: "60 km",
     price: "$199",
     description: "The ultimate Bali experience with hiking, waterfalls, and mountain scenery.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80",
+    image: "/gallerypics/bali_vw_04.jpg",
     highlights: ["Mountain hiking", "Waterfall visits", "Full meals included"],
   },
 ];

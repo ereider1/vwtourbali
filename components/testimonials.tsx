@@ -10,7 +10,7 @@ const testimonials = [
     country: "United States",
     rating: 5,
     text: "Absolutely amazing experience! The driver was knowledgeable, the VW was comfortable, and the views were breathtaking. Highly recommend!",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+    image: "flags/US.svg",
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const testimonials = [
     country: "Italy",
     rating: 5,
     text: "The best tour we've had in Bali. Professional service, hidden gems, and unforgettable memories. Worth every penny!",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
+    image: "flags/IT.svg",
   },
   {
     id: 3,
@@ -26,13 +26,13 @@ const testimonials = [
     country: "Australia",
     rating: 5,
     text: "Incredible attention to detail and customer service. The sunset beach tour was magical. Can't wait to come back!",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80",
+    image: "flags/AU.svg",
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="bg-gradient-to-b from-primary-50 to-white py-20 lg:py-32">
+    <section id="reviews" className="bg-gradient-to-b from-primary-50 to-white py-20 lg:py-32">
       <div className="container-max container-padding">
         {/* Header */}
         <div className="mb-16 max-w-2xl">
@@ -53,7 +53,7 @@ export default function Testimonials() {
               </div>
 
               {/* Quote */}
-              <p className="mb-6 text-gray-600">&quot;{testimonial.text}&quot;</p>
+              <p className="mb-6 text-gray-600">"{testimonial.text}"</p>
 
               {/* Author */}
               <div className="flex items-center gap-4">

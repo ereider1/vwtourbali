@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import herobg from '../public/hero-1.png';
 
 export default function Hero() {
   return (
@@ -8,7 +9,7 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80"
+          src={herobg}
           alt="Bali Landscape"
           fill
           priority
