@@ -113,7 +113,7 @@ export default function Tours() {
               </div>
 
               {/* CTA */}
-              <a href={`https://wa.me/62123456789?text=I'm interested in the ${tour.name} tour`} className="btn-primary w-full text-center">
+              <a href={`https://wa.me/6281237812783?text=I'm interested in the ${tour.name} tour`} className="btn-primary w-full text-center">
                 Book This Tour
               </a>
             </div>
@@ -123,7 +123,7 @@ export default function Tours() {
         {/* All Tours CTA */}
         <div className="mt-16 text-center">
           <p className="mb-4 text-gray-600">Interested in a custom tour?</p>
-          <a href="https://wa.me/62123456789" className="btn-secondary">
+          <a href="https://wa.me/6281237812783" className="btn-secondary">
             Create Your Own Adventure
           </a>
         </div>

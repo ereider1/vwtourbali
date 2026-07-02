@@ -7,7 +7,7 @@ const geist = Geist({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "VW Tour Bali - Premium Volkswagen Tour Experience",
   description:
-    "Experience the beauty of Bali in a classic Volkswagen. Curated tours with professional guides.",
+    "Experience the beauty of Bali in a classic convertible Volkswagen. Curated tours with professional guides.",
   viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
   icons: {
     icon: "/favicon.ico",
