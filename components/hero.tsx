@@ -38,7 +38,7 @@ export default function Hero() {
             <a href="#tours" className="btn-primary">
               Explore Tours
             </a>
-            <a href="https://wa.me/62123456789" className="btn-secondary">
+            <a href="https://wa.me/6281237812783" className="btn-secondary">
               WhatsApp Us
             </a>
           </div>
