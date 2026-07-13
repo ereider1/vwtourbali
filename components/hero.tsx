@@ -5,7 +5,7 @@ import herobg from '../public/hero-1.png';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-primary-50 to-white">
+    <section className="relative min-h-screen bg-linear-to-b from-primary-50 to-white">
       {/* Background Image */}
       <div className="absolute inset-0 overflow-hidden">
         <Image

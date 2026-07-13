@@ -24,7 +24,7 @@ export default function Header() {
               <span className="font-bold text-white">VW</span>
             </div>
             <span className="hidden font-bold text-gray-900 sm:inline">
-              VW Tour Bali
+              Bali Safari Tour
             </span>
           </Link>
 
