@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
@@ -20,8 +21,14 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600">
-              <span className="font-bold text-white">VW</span>
+            <div className="flex h-10 w-10 p-1 items-center justify-center rounded-lg bg-primary-600">
+              <Image
+                src="/vw-logo-3.svg"
+                alt="VW logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
             </div>
             <span className="hidden font-bold text-gray-900 sm:inline">
               Bali Safari Tour
@@ -48,7 +55,7 @@ export default function Header() {
             </a>
 
             <a href="#contact" className="btn-primary hidden text-sm sm:inline-flex">
-              WhatsApp Bobby
+              WhatsApp Us
             </a>
 
             {/* Mobile Menu Button */}
