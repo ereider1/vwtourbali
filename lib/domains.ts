@@ -19,7 +19,7 @@ export const SITES: Record<SiteKey, SiteConfig> = {
   },
   vwbali: {
     key: "vwbali",
-    url: "https://vwbali.tours",
+    url: "https://balivw.tours",
     path: "/vwbali",
     title: "Guest Experiences | VW Bali Tours",
     description:
@@ -44,8 +44,8 @@ export const SITES: Record<SiteKey, SiteConfig> = {
 };
 
 const HOST_TO_SITE: Record<string, SiteKey> = {
-  "vwbali.tours": "vwbali",
-  "www.vwbali.tours": "vwbali",
+  "balivw.tours": "vwbali",
+  "www.balivw.tours": "vwbali",
   "gobali.tours": "gobali",
   "www.gobali.tours": "gobali",
   "balisafari.tours": "balisafari",
