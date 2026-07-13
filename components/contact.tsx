@@ -63,7 +63,7 @@ export default function Contact() {
                   <h4 className="mb-1 font-semibold">Email</h4>
                   <p className="text-gray-300">
                     <a href="mailto:reiderea@gmail.com" className="hover:text-primary-400">
-                      info@vwtourbali.com
+                      reiderea@gmail.com
                     </a>
                   </p>
                   <p className="text-sm text-gray-400">We&apos;ll reply within 2 hours</p>

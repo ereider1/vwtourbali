@@ -88,7 +88,7 @@ export default function Gallery() {
                 src={image.src}
                 alt={image.alt}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/60 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -104,7 +104,7 @@ export default function Gallery() {
         {/* CTA */}
         <div className="mt-16 text-center">
           <p className="mb-4 text-gray-600">Create your own unforgettable moments</p>
-          <a href="https://wa.me/62123456789" className="btn-primary">
+          <a href="https://wa.me/6281237812783" className="btn-primary">
             Book Your Tour Today
           </a>
         </div>
