@@ -1,4 +1,11 @@
-export default function Footer() {
+import { headers } from "next/headers";
+import { SITES, siteForHost } from "@/lib/domains";
+
+export default async function Footer() {
+  const headersList = await headers();
+  const currentSite = siteForHost(headersList.get("host"));
+  const otherSites = Object.values(SITES).filter((s) => s.key !== currentSite.key);
+
   return (
     <footer className="bg-gray-900 text-white py-12 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
@@ -28,6 +35,17 @@ export default function Footer() {
         </div>
         <div className="border-t border-gray-700 pt-8 text-center text-gray-400">
           <p>&copy; 2026 VW Tours Bali. All rights reserved.</p>
+          <p className="mt-2 text-sm">
+            Part of VW Tour Bali —{" "}
+            {otherSites.map((s, i) => (
+              <span key={s.key}>
+                <a href={s.url} className="hover:text-white">
+                  {s.url.replace("https://", "")}
+                </a>
+                {i < otherSites.length - 1 ? " · " : ""}
+              </span>
+            ))}
+          </p>
         </div>
       </div>
     </footer>
