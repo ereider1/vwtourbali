@@ -170,7 +170,7 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
   return (
     <div className="h-[470px] w-full lg:h-[620px]">
       <div ref={containerRef} className="h-full w-full" aria-label="Interactive map of Bali tour stops" />
-      <div className="mt-4 flex flex-wrap gap-4 text-xs text-black/55">
+      <div className="mt-4 flex flex-wrap p-4 gap-4 text-sm text-black/55">
         {(Object.keys(CATEGORY_META) as MapCategory[]).map((key) => (
           <span key={key} className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: CATEGORY_META[key].color }} />{CATEGORY_META[key].label}</span>
         ))}

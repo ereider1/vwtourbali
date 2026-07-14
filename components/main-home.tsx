@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/header";
 
 const tours = [
@@ -66,7 +67,7 @@ export default function MainHome() {
               <p className="script text-3xl">Choose your road</p>
               <h2 className="mt-1 font-[family-name:var(--font-display)] text-4xl font-black uppercase leading-none tracking-tight">Bali, your way</h2>
               <p className="mt-5 text-sm leading-6 text-black/60">Pick a favourite route or build your own. Every day is private, flexible and paced around you.</p>
-              <a href="https://wa.me/6281237812783" className="mt-7 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[.18em] text-[#425f32]"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#79924f] text-white">→</span> See all possibilities</a>
+              <Link href="/tours" className="mt-7 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[.18em] text-[#425f32]"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#79924f] text-white">→</span> See all possibilities</Link>
             </div>
             <div className="hide-scrollbar -mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-8 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
               {tours.map((tour, index) => (

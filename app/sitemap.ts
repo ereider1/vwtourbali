@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const headersList = await headers();
   const site = siteForHost(headersList.get("host"));
 
-  return [
+  const entries: MetadataRoute.Sitemap = [
     {
       url: site.url,
       lastModified: new Date(),
@@ -14,4 +14,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
   ];
+
+  if (site.key === "main") {
+    entries.push({
+      url: `${site.url}/tours`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    });
+  }
+
+  return entries;
 }
