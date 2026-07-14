@@ -20,7 +20,28 @@ export default function MainHome() {
     <main className="min-h-screen overflow-hidden bg-[#fbfaf6]">
       <div className="relative min-h-[92vh] bg-[#263b27] text-white">
         <Header overlay />
-        <Image src="/hero-1.jpg" alt="Classic Volkswagen safari through Bali" fill priority className="object-cover" />
+        <div className="absolute inset-0">
+          <Image
+            src="/hero-1.jpg"
+            alt="Classic Volkswagen safari through Bali"
+            fill
+            priority
+            className="object-cover"
+          />
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            poster="/hero-1.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            aria-hidden="true"
+          >
+            <source src="/bobby-vw-hero.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(21,37,25,.9),rgba(21,37,25,.28)_68%,rgba(21,37,25,.1))]" />
         <div className="container-max container-padding relative z-10 flex min-h-[92vh] items-end pb-24 pt-44 lg:items-center lg:pb-0">
           <div className="max-w-3xl animate-rise">

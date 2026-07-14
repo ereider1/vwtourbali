@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+/* green */
+/*
 :root {
   --ink: #20241f;
   --forest: #425f32;
@@ -10,6 +12,19 @@
   --cream: #f4f1e8;
   --paper: #fbfaf6;
   --sand: #d9c9aa;
+}
+*/
+
+/* blue */
+:root {
+  --ink: #1d2735;
+  --forest: #354b69;
+  --forest-dark: #17273e;
+  --leaf: #61758f;
+  --lime: #9cabbc;
+  --cream: #ecebea;
+  --paper: #f7f6f3;
+  --sand: #c5c3bd;
 }
 
 * { box-sizing: border-box; }
