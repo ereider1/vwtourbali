@@ -2,7 +2,10 @@
 
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
-import L, { type Map as LeafletMap, type Marker as LeafletMarker } from "leaflet";
+import L, {
+  type Map as LeafletMap,
+  type Tooltip as LeafletTooltip,
+} from "leaflet";
 
 export type MapCategory = "landmark" | "nature" | "adventure";
 
@@ -10,6 +13,9 @@ export interface MapStop {
   name: string;
   region: string;
   note: string;
+  detail: string;
+  image: string;
+  learnMoreHref: string;
   category: MapCategory;
   position: [number, number];
 }
@@ -39,7 +45,7 @@ interface InteractiveMapProps {
 export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: InteractiveMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
-  const markerRefs = useRef<Record<string, LeafletMarker>>({});
+  const tooltipRefs = useRef<Record<string, LeafletTooltip>>({});
 
   useEffect(() => {
     const container = containerRef.current;
@@ -48,35 +54,97 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
     // Leaflet tags its container; clearing a stale tag makes Strict Mode remounts safe.
     const taggedContainer = container as HTMLDivElement & { _leaflet_id?: number };
     if (taggedContainer._leaflet_id) delete taggedContainer._leaflet_id;
+    const cancelTooltipClosures: Array<() => void> = [];
 
-    const map = L.map(container, { center: [-8.45, 115.15], zoom: 10, scrollWheelZoom: false });
+    const map = L.map(container, {
+      center: [-8.45, 115.15],
+      zoom: 10,
+      scrollWheelZoom: false,
+      zoomAnimation: true,
+    });
     mapRef.current = map;
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      maxZoom: 20,
     }).addTo(map);
 
     stops.forEach((stop) => {
       const tooltip = document.createElement("div");
+      tooltip.className = "map-stop-card";
+
+      const image = document.createElement("img");
+      image.src = stop.image;
+      image.alt = "";
+      image.className = "map-stop-card__image";
+
+      const content = document.createElement("div");
+      content.className = "map-stop-card__content";
+
+      const meta = document.createElement("span");
+      meta.className = "map-stop-card__meta";
+      meta.textContent = `${stop.region} · ${CATEGORY_META[stop.category].label}`;
+
       const title = document.createElement("strong");
+      title.className = "map-stop-card__title";
       const note = document.createElement("p");
+      note.className = "map-stop-card__note";
+      const detail = document.createElement("p");
+      detail.className = "map-stop-card__detail";
+      const link = document.createElement("a");
+      link.className = "map-stop-card__link";
+      link.href = stop.learnMoreHref;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "learn more →";
+
       title.textContent = stop.name;
       note.textContent = stop.note;
-      note.style.margin = "4px 0 0";
-      note.style.fontSize = "12px";
-      tooltip.append(title, note);
+      detail.textContent = stop.detail;
+      content.append(meta, title, note, detail, link);
+      tooltip.append(image, content);
 
-      const marker = L.marker(stop.position, { icon: createIcon(stop.category) })
-        .bindTooltip(tooltip, { direction: "top", offset: [0, -28] })
-        .on("mouseover", () => onHoverStop(stop.name))
-        .on("mouseout", () => onHoverStop(null))
+      let closeTimer: number | undefined;
+      const cancelClose = () => window.clearTimeout(closeTimer);
+      cancelTooltipClosures.push(cancelClose);
+      const closeTooltip = () => {
+        cancelClose();
+        closeTimer = window.setTimeout(() => onHoverStop(null), 180);
+      };
+      tooltip.addEventListener("mouseenter", cancelClose);
+      tooltip.addEventListener("mouseleave", closeTooltip);
+
+      const mapTooltip = L.tooltip({
+        className: "map-stop-tooltip",
+        direction: "top",
+        interactive: true,
+        offset: [0, -28],
+        opacity: 1,
+      })
+        .setLatLng(stop.position)
+        .setContent(tooltip);
+
+      L.marker(stop.position, {
+        alt: `${stop.name} map stop`,
+        icon: createIcon(stop.category),
+        title: stop.name,
+      })
+        .on("mouseover focus click", () => {
+          cancelClose();
+          onHoverStop(stop.name);
+        })
+        .on("mouseout blur", closeTooltip)
         .addTo(map);
-      markerRefs.current[stop.name] = marker;
+      tooltipRefs.current[stop.name] = mapTooltip;
     });
+
+    map.on("click", () => onHoverStop(null));
 
     window.requestAnimationFrame(() => map.invalidateSize());
 
     return () => {
-      markerRefs.current = {};
+      cancelTooltipClosures.forEach((cancelClose) => cancelClose());
+      tooltipRefs.current = {};
       mapRef.current = null;
       map.remove();
       if (taggedContainer._leaflet_id) delete taggedContainer._leaflet_id;
@@ -85,12 +153,18 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
 
   useEffect(() => {
     const map = mapRef.current;
-    Object.entries(markerRefs.current).forEach(([name, marker]) => {
-      if (name === hoveredStop) marker.openTooltip();
-      else marker.closeTooltip();
+    Object.entries(tooltipRefs.current).forEach(([name, tooltip]) => {
+      if (map && name === hoveredStop) tooltip.addTo(map);
+      else tooltip.remove();
     });
     const activeStop = stops.find((stop) => stop.name === hoveredStop);
-    if (map && activeStop) map.flyTo(activeStop.position, Math.max(map.getZoom(), 11), { duration: 0.6 });
+    if (map && activeStop) {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      map.setView(activeStop.position, Math.max(map.getZoom(), 11), {
+        animate: !reduceMotion,
+        duration: 0.45,
+      });
+    }
   }, [hoveredStop, stops]);
 
   return (

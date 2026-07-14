@@ -105,7 +105,103 @@ button, input, select, textarea { font: inherit; }
 }
 .animate-rise { animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
 
-.leaflet-container { font-family: var(--font-body), Arial, sans-serif; }
+.leaflet-container {
+  background: #e9eee5;
+  font-family: var(--font-body), Arial, sans-serif;
+}
+
+.leaflet-tile-pane {
+  filter: saturate(.72) contrast(.9) brightness(1.03);
+}
+
+.map-stop-tooltip.leaflet-tooltip {
+  width: min(330px, calc(100vw - 48px));
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 38px rgb(30 42 25 / .22);
+  white-space: normal;
+}
+
+.map-stop-tooltip.leaflet-tooltip-top::before {
+  border-top-color: #fff;
+}
+
+.map-stop-card {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  min-height: 150px;
+}
+
+.map-stop-card__image {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  object-fit: cover;
+}
+
+.map-stop-card__content {
+  padding: 14px 15px 13px;
+}
+
+.map-stop-card__meta,
+.map-stop-card__title {
+  display: block;
+}
+
+.map-stop-card__meta {
+  color: #79924f;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.map-stop-card__title {
+  margin-top: 3px;
+  color: #1e2a19;
+  font-family: var(--font-display), sans-serif;
+  font-size: 17px;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.map-stop-card__note,
+.map-stop-card__detail {
+  margin: 0;
+  color: rgb(0 0 0 / .62);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.map-stop-card__note {
+  margin-top: 7px;
+  color: #425f32;
+  font-weight: 700;
+}
+
+.map-stop-card__detail {
+  margin-top: 4px;
+}
+
+.map-stop-card__link {
+  display: inline-block;
+  margin-top: 8px;
+  color: #425f32;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.map-stop-card__link:hover,
+.map-stop-card__link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
