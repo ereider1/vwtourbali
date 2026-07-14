@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "glightbox/dist/css/glightbox.min.css";
 import { SITES } from "@/lib/domains";
 
 const galleryImages = [
@@ -51,6 +52,21 @@ export default function Gallery() {
   const filteredImages =
     selectedCategory === "All" ? galleryImages : galleryImages.filter((img) => img.category === selectedCategory);
 
+  useEffect(() => {
+    let lightbox: { destroy: () => void } | undefined;
+
+    import("glightbox").then(({ default: GLightbox }) => {
+      lightbox = GLightbox({
+        selector: ".glightbox",
+        loop: true,
+        touchNavigation: true,
+        zoomable: true,
+      });
+    });
+
+    return () => lightbox?.destroy();
+  }, [filteredImages]);
+
   return (
     <section id="gallery" className="py-20 lg:py-32">
       <div className="container-max container-padding">
@@ -81,9 +97,12 @@ export default function Gallery() {
         {/* Gallery Grid */}
         <div className="grid gap-4 md:grid-cols-3">
           {filteredImages.map((image) => (
-            <div
+            <a
               key={image.id}
-              className="group relative h-64 overflow-hidden rounded-lg md:h-80"
+              href={image.src}
+              className="glightbox group relative block h-64 overflow-hidden rounded-lg md:h-80"
+              data-gallery="bali-gallery"
+              data-glightbox={`title: ${image.alt}; description: ${image.category}`}
             >
               <Image
                 src={image.src}
@@ -98,7 +117,7 @@ export default function Gallery() {
                   <p className="text-xs text-gray-200">{image.category}</p>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 

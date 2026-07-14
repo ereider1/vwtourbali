@@ -1,8 +1,32 @@
 "use client";
 
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+
+const WHATSAPP_NUMBER = "6281237812783";
 
 export default function Contact() {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const name = form.get("name") as string;
+    const tour = form.get("tour") as string;
+    const message = form.get("message") as string;
+
+    const text = [
+      `Hi VW Tours, I'd like to enquire about a tour.`,
+      `Name: ${name}`,
+      tour && tour !== "Select a tour" ? `Tour Interest: ${tour}` : null,
+      message ? `Message: ${message}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+  }
+
   return (
     <section id="contact" className="bg-gray-900 py-20 lg:py-32 text-white">
       <div className="container-max container-padding">
@@ -54,22 +78,6 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="flex items-start gap-4">
-                <div className="mt-1 rounded-lg bg-primary-600 p-3">
-                  <FaEnvelope size={20} />
-                </div>
-                <div>
-                  <h4 className="mb-1 font-semibold">Email</h4>
-                  <p className="text-gray-300">
-                    <a href="mailto:reiderea@gmail.com" className="hover:text-primary-400">
-                      reiderea@gmail.com
-                    </a>
-                  </p>
-                  <p className="text-sm text-gray-400">We&apos;ll reply within 2 hours</p>
-                </div>
-              </div>
-
               {/* Location */}
               <div className="flex items-start gap-4">
                 <div className="mt-1 rounded-lg bg-primary-600 p-3">
@@ -102,11 +110,12 @@ export default function Contact() {
 
           {/* Contact Form */}
           <div className="rounded-xl bg-gray-800 p-8">
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="mb-2 block text-sm font-medium">Name</label>
                 <input
                   type="text"
+                  name="name"
                   placeholder="Your name"
                   className="w-full rounded-lg border border-gray-700 bg-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none"
                   required
@@ -114,18 +123,11 @@ export default function Contact() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium">Email</label>
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="w-full rounded-lg border border-gray-700 bg-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none"
-                  required
-                />
-              </div>
-
-              <div>
                 <label className="mb-2 block text-sm font-medium">Tour Interest</label>
-                <select className="w-full rounded-lg border border-gray-700 bg-gray-700 px-4 py-3 text-white focus:border-primary-500 focus:outline-none">
+                <select
+                  name="tour"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-700 px-4 py-3 text-white focus:border-primary-500 focus:outline-none"
+                >
                   <option>Select a tour</option>
                   <option>Sunrise Adventure</option>
                   <option>Cultural Heritage</option>
@@ -138,6 +140,7 @@ export default function Contact() {
               <div>
                 <label className="mb-2 block text-sm font-medium">Message</label>
                 <textarea
+                  name="message"
                   placeholder="Tell us about your preferences..."
                   rows={4}
                   className="w-full rounded-lg border border-gray-700 bg-gray-700 px-4 py-3 text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none"
@@ -148,7 +151,7 @@ export default function Contact() {
                 type="submit"
                 className="btn-primary w-full"
               >
-                Send Message
+                Send via WhatsApp
               </button>
             </form>
           </div>

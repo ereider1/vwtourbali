@@ -103,7 +103,6 @@ const jsonLd = {
   image: `${SITE_URL}/hero-1.jpg`,
   logo: `${SITE_URL}/vw-logo-3.svg`,
   telephone: "+62-812-3781-2783",
-  email: "reiderea@gmail.com",
   priceRange: "$$",
   address: {
     "@type": "PostalAddress",
