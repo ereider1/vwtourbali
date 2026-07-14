@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { SITES } from "@/lib/domains";
 
 const galleryImages = [
   {
@@ -107,6 +108,13 @@ export default function Gallery() {
           <a href="https://wa.me/6281237812783" className="btn-primary">
             Book Your Tour Today
           </a>
+          <p className="mt-6 text-sm text-gray-500">
+            See hundreds more real guest photos and videos at{" "}
+            <a href={SITES.vwbali.url} className="text-primary-600 hover:underline">
+              {SITES.vwbali.url.replace("https://", "")}
+            </a>
+            .
+          </p>
         </div>
       </div>
     </section>

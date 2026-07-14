@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { SITES } from "@/lib/domains";
 
 const captions = [
   "The Sitorus family soaking up the sunrise on the ridge road above Kintamani.",
@@ -79,6 +80,17 @@ export default function GuestShowcase() {
           <a href="https://wa.me/6281237812783" className="btn-primary">
             Book Your Own Bali Safari
           </a>
+          <p className="mt-6 text-sm text-gray-500">
+            Curious where each photo was taken? See{" "}
+            <a href={SITES.gobali.url} className="text-primary-600 hover:underline">
+              our full guide to Bali&apos;s attractions
+            </a>{" "}
+            at {SITES.gobali.url.replace("https://", "")}, or plan your own route with{" "}
+            <a href={SITES.balisafari.url} className="text-primary-600 hover:underline">
+              our trip planner
+            </a>{" "}
+            at {SITES.balisafari.url.replace("https://", "")}.
+          </p>
         </div>
       </div>
     </section>

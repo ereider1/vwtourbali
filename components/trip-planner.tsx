@@ -1,5 +1,7 @@
 "use client";
 
+import { SITES } from "@/lib/domains";
+
 const stops = [
   {
     name: "Tanah Lot",
@@ -158,6 +160,17 @@ export default function TripPlanner() {
           <a href="https://wa.me/6281237812783" className="btn-primary">
             Book Your Safari Route
           </a>
+          <p className="mt-6 text-sm text-gray-500">
+            Want more detail on each stop? Read{" "}
+            <a href={SITES.gobali.url} className="text-primary-600 hover:underline">
+              our full attraction guides
+            </a>{" "}
+            at {SITES.gobali.url.replace("https://", "")}, or see{" "}
+            <a href={SITES.vwbali.url} className="text-primary-600 hover:underline">
+              what past guests experienced
+            </a>{" "}
+            at {SITES.vwbali.url.replace("https://", "")}.
+          </p>
         </div>
       </div>
     </section>

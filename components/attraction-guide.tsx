@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { SITES } from "@/lib/domains";
 
 const attractions = [
   {
@@ -125,6 +126,17 @@ export default function AttractionGuide() {
           <a href="https://wa.me/6281237812783" className="btn-primary">
             Book a Guided Tour
           </a>
+          <p className="mt-6 text-sm text-gray-500">
+            Ready to map out your visit? Use{" "}
+            <a href={SITES.balisafari.url} className="text-primary-600 hover:underline">
+              our interactive trip planner
+            </a>{" "}
+            at {SITES.balisafari.url.replace("https://", "")}, or see{" "}
+            <a href={SITES.vwbali.url} className="text-primary-600 hover:underline">
+              real guest photos from these spots
+            </a>{" "}
+            at {SITES.vwbali.url.replace("https://", "")}.
+          </p>
         </div>
       </div>
     </section>

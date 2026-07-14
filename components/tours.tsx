@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { FaClock, FaDollarSign, FaMap, FaUsers } from "react-icons/fa";
+import { SITES } from "@/lib/domains";
 
 const tours = [
   {
@@ -126,6 +127,21 @@ export default function Tours() {
           <a href="https://wa.me/6281237812783" className="btn-secondary">
             Create Your Own Adventure
           </a>
+        </div>
+
+        {/* Cross-site links */}
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>
+            Not sure which stops to pick? See{" "}
+            <a href={SITES.gobali.url} className="text-primary-600 hover:underline">
+              our full guide to Bali&apos;s top attractions
+            </a>{" "}
+            at {SITES.gobali.url.replace("https://", "")}, or map out a route with{" "}
+            <a href={SITES.balisafari.url} className="text-primary-600 hover:underline">
+              our interactive trip planner
+            </a>{" "}
+            at {SITES.balisafari.url.replace("https://", "")}.
+          </p>
         </div>
       </div>
     </section>
