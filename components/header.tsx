@@ -36,7 +36,7 @@ export default function Header({
           <Link href="/" className="flex items-center gap-2">
             <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/90 p-2">
               <Image
-                src="/vw-logo-3.svg"
+                src="/vw-logo-black.svg"
                 alt="VW logo"
                 width={40}
                 height={40}
