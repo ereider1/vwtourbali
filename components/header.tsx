@@ -5,23 +5,36 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 
-export default function Header() {
+interface HeaderProps {
+  overlay?: boolean;
+  brand?: string;
+  tagline?: string;
+  navItems?: { label: string; href: string }[];
+}
+
+export default function Header({
+  overlay = false,
+  brand = "Bali Safari Tour",
+  tagline = "Classic VW adventures",
+  navItems = [
+    { label: "Tours", href: "#tours" },
+    { label: "Our Story", href: "#why-us" },
+    { label: "Moments", href: "#gallery" },
+    { label: "Guest Stories", href: "#reviews" },
+  ],
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
-    { label: "Tours", href: "#tours" },
-    { label: "Why Us", href: "#why-us" },
-    { label: "Gallery", href: "#gallery" },
-    { label: "Reviews", href: "#reviews" },
-  ];
-
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-elevation-1">
+    <header className={`${overlay ? "absolute text-white" : "sticky bg-[#fbfaf6] text-[#20241f] shadow-sm"} top-0 z-50 w-full`}>
+      <div className={`${overlay ? "bg-[#263b27]/75" : "bg-[#263b27]"} hidden px-8 py-1.5 text-right text-[10px] uppercase tracking-[.18em] text-white/75 sm:block`}>
+        Private tours across Bali &nbsp; · &nbsp; +62 812 3781 2783
+      </div>
       <nav className="container-max container-padding py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 p-1 items-center justify-center rounded-lg bg-primary-600">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/90 p-2">
               <Image
                 src="/vw-logo-3.svg"
                 alt="VW logo"
@@ -30,8 +43,9 @@ export default function Header() {
                 className="object-contain"
               />
             </div>
-            <span className="hidden font-bold text-gray-900 sm:inline">
-              Bali Safari Tour
+            <span className="hidden sm:block">
+              <b className="block font-[family-name:var(--font-display)] text-lg uppercase leading-none tracking-tight">{brand}</b>
+              <small className="text-[9px] uppercase tracking-[.26em] opacity-70">{tagline}</small>
             </span>
           </Link>
 
@@ -41,7 +55,7 @@ export default function Header() {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm font-medium text-gray-700 transition-colors hover:text-primary-600"
+                className="text-[11px] font-bold uppercase tracking-[.16em] transition-colors hover:text-[#b6cd72]"
               >
                 {item.label}
               </a>
@@ -50,18 +64,14 @@ export default function Header() {
 
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center gap-4">
-            <a href="#contact" className="btn-primary hidden text-sm sm:inline-flex">
-              Book Now
-            </a>
-
-            <a href="#contact" className="btn-primary hidden text-sm sm:inline-flex">
-              WhatsApp Us
+            <a href="https://wa.me/6281237812783" className={`${overlay ? "border-white/60 text-white hover:bg-white hover:text-[#263b27]" : "border-[#425f32] text-[#425f32]"} hidden border px-5 py-2.5 text-[10px] font-bold uppercase tracking-[.18em] sm:inline-flex`}>
+              Plan my tour
             </a>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-gray-700 md:hidden"
+              className="md:hidden"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -71,19 +81,19 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="mt-4 space-y-2 border-t border-gray-200 pt-4 md:hidden">
+          <div className={`${overlay ? "border-white/30 bg-[#263b27]/95 text-white" : "border-black/10 bg-[#fbfaf6] text-[#20241f]"} mt-4 space-y-2 border-t p-4 md:hidden`}>
             {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="block px-2 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                className="block px-2 py-3 text-sm font-bold uppercase tracking-[.14em] transition-colors hover:text-[#b6cd72]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
             <a href="#contact" className="btn-primary mt-4 block w-full text-center">
-              Book Now
+              Plan my tour
             </a>
           </div>
         )}

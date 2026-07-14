@@ -80,59 +80,50 @@ const attractions = [
 
 export default function AttractionGuide() {
   return (
-    <section className="py-20 lg:py-32">
+    <section id="content" className="py-24 lg:py-32">
       <div className="container-max container-padding">
-        <div className="mb-16 max-w-2xl">
-          <span className="badge">Attraction Guide</span>
-          <h1 className="section-title mb-4 mt-4">Bali&apos;s Must-See Attractions</h1>
-          <p className="section-subtitle">
-            A practical guide to the temples, terraces, and viewpoints that make up a classic
-            Bali itinerary — what each place is, when to go, and what to know before you arrive.
-          </p>
+        <div className="mb-20 grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div><p className="script text-4xl">Where will Bali take you?</p><h2 className="mt-1 font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.92] tracking-tight sm:text-6xl">Eight places<br />worth the road</h2></div>
+          <p className="max-w-xl text-base leading-7 text-black/55 lg:ml-auto">A practical field guide to the temples, terraces and viewpoints that shape a classic Bali itinerary—what each place feels like, when to go and what to know.</p>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-20 lg:space-y-28">
           {attractions.map((place, index) => (
             <article
               key={place.id}
               id={place.id}
-              className={`grid items-center gap-8 lg:grid-cols-2 ${
+              className={`grid items-center gap-8 lg:grid-cols-[1.12fr_.88fr] lg:gap-16 ${
                 index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
               }`}
             >
-              <div className="relative h-64 overflow-hidden rounded-lg lg:h-80">
+              <div className={`${index % 3 === 1 ? "lg:translate-y-5" : ""} relative aspect-[4/3] overflow-hidden bg-[#263b27]`}>
                 <Image
                   src={place.image}
                   alt={place.name}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover transition duration-700 hover:scale-105"
                 />
+                <span className="absolute left-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-[#fbfaf6] font-[family-name:var(--font-display)] text-sm font-bold text-[#425f32]">{String(index + 1).padStart(2, "0")}</span>
               </div>
               <div>
-                <span className="badge">{place.category}</span>
-                <h2 className="mb-3 mt-4 text-2xl font-bold text-gray-900">{place.name}</h2>
-                <p className="mb-4 text-gray-600">{place.description}</p>
-                <p className="text-sm font-medium text-primary-600">Tip: {place.tip}</p>
+                <span className="eyebrow">{place.category}</span>
+                <h2 className="mb-5 mt-4 font-[family-name:var(--font-display)] text-4xl font-black uppercase leading-none tracking-tight">{place.name}</h2>
+                <p className="mb-6 text-sm leading-7 text-black/60">{place.description}</p>
+                <div className="border-l-2 border-[#79924f] pl-4"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-[#425f32]">Local note</p><p className="mt-1 text-sm text-black/60">{place.tip}</p></div>
               </div>
             </article>
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="mb-4 text-gray-600">
-            See these attractions in person on a guided VW safari tour.
-          </p>
-          <a href="https://wa.me/6281237812783" className="btn-primary">
-            Book a Guided Tour
-          </a>
-          <p className="mt-6 text-sm text-gray-500">
+        <div className="mt-24 border-t border-black/10 pt-8 text-center">
+          <p className="text-xs leading-6 text-black/45">
             Ready to map out your visit? Use{" "}
-            <a href={SITES.balisafari.url} className="text-primary-600 hover:underline">
+            <a href={SITES.balisafari.url} className="font-bold text-[#425f32] hover:underline">
               our interactive trip planner
             </a>{" "}
             at {SITES.balisafari.url.replace("https://", "")}, or see{" "}
-            <a href={SITES.vwbali.url} className="text-primary-600 hover:underline">
+            <a href={SITES.vwbali.url} className="font-bold text-[#425f32] hover:underline">
               real guest photos from these spots
             </a>{" "}
             at {SITES.vwbali.url.replace("https://", "")}.

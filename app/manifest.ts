@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Explore Bali in a classic convertible Volkswagen Safari with island-wide guided tours.",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#4338ca",
+    background_color: "#fbfaf6",
+    theme_color: "#263b27",
     icons: [
       {
         src: "/favicon.png",

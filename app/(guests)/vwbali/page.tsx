@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import Contact from "@/components/contact";
-import CTA from "@/components/cta";
 import GuestShowcase from "@/components/guest-showcase";
+import DomainHero from "@/components/domain-hero";
+import DomainBooking from "@/components/domain-booking";
+import EditorialFooter from "@/components/editorial-footer";
 import { SITES } from "@/lib/domains";
 
 const site = SITES.vwbali;
@@ -39,34 +38,11 @@ export const metadata: Metadata = {
 
 export default function VwBaliPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <Header />
-
-      <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden bg-gray-900 text-white">
-        <video
-          className="absolute inset-0 h-full w-full object-cover opacity-50"
-          src="/bobby-vw-hero.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        <div className="container-max container-padding relative text-center">
-          <span className="badge bg-white text-gray-900">Guest Experiences</span>
-          <h1 className="section-title mt-4 mb-6 text-white text-balance">
-            See Bali Through Our Guests&apos; Eyes
-          </h1>
-          <p className="section-subtitle mx-auto max-w-2xl text-gray-200 text-balance">
-            Photos and video moments from real travelers who&apos;ve ridden along on our classic
-            Volkswagen safaris — not staged shots, just the trip as they lived it.
-          </p>
-        </div>
-      </section>
-
+    <main className="min-h-screen bg-[#fbfaf6]">
+      <DomainHero brand="Bali VW Tours" tagline="Stories from the road" eyebrow="Guest journals · Bali, Indonesia" title="Bali through" script="their eyes" description="No staged shots and no stock travel moments. Just the island as our guests lived it—from the back seat of a classic Volkswagen." image="/gallerypics/bali_vw_01.jpg" video="/bobby-vw-hero.mp4" ctaLabel="Meet our guests" navItems={[{ label: "Guest stories", href: "#content" }, { label: "Plan your day", href: "#contact" }]} />
       <GuestShowcase />
-      <Contact />
-      <CTA />
-      <Footer />
+      <DomainBooking script="Make your own memories" title="Be part of the next story" description="Tell us who you’re traveling with and what makes a perfect Bali day. We’ll help shape the route—and leave plenty of room for the unplanned moments." image="/gallerypics/bali_vw_24.jpg" />
+      <EditorialFooter current="vwbali" />
     </main>
   );
 }

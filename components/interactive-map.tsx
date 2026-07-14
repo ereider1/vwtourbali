@@ -2,8 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Tooltip, useMap } from "react-leaflet";
-import L, { type Marker as LeafletMarker } from "leaflet";
+import L, { type Map as LeafletMap, type Marker as LeafletMarker } from "leaflet";
 
 export type MapCategory = "landmark" | "nature" | "adventure";
 
@@ -16,36 +15,19 @@ export interface MapStop {
 }
 
 const CATEGORY_META: Record<MapCategory, { label: string; color: string; emoji: string }> = {
-  landmark: { label: "Must-See Icons & Landmarks", color: "#a855f7", emoji: "🛕" },
-  nature: { label: "Nature & Scenic Landscapes", color: "#16a34a", emoji: "🌿" },
-  adventure: { label: "Adventure & Entertainment", color: "#f97316", emoji: "🥾" },
+  landmark: { label: "Temples & landmarks", color: "#425f32", emoji: "🛕" },
+  nature: { label: "Nature & landscapes", color: "#79924f", emoji: "🌿" },
+  adventure: { label: "Markets & adventure", color: "#b48a4c", emoji: "🥾" },
 };
 
 function createIcon(category: MapCategory) {
   const { color, emoji } = CATEGORY_META[category];
   return L.divIcon({
     className: "map-pin-icon",
-    html: `<span style="
-      display:flex;align-items:center;justify-content:center;
-      width:32px;height:32px;border-radius:50% 50% 50% 0;
-      transform:rotate(-45deg);
-      background:${color};box-shadow:0 1px 4px rgba(0,0,0,0.4);
-      border:2px solid white;">
-      <span style="transform:rotate(45deg);font-size:16px;line-height:1;">${emoji}</span>
-    </span>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
+    html: `<span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:${color};box-shadow:0 2px 8px rgba(0,0,0,.3);border:2px solid white"><span style="transform:rotate(45deg);font-size:16px;line-height:1">${emoji}</span></span>`,
+    iconSize: [34, 34],
+    iconAnchor: [17, 34],
   });
-}
-
-function FlyToStop({ target }: { target: MapStop | null }) {
-  const map = useMap();
-  useEffect(() => {
-    if (target) {
-      map.flyTo(target.position, Math.max(map.getZoom(), 11), { duration: 0.6 });
-    }
-  }, [target, map]);
-  return null;
 }
 
 interface InteractiveMapProps {
@@ -55,65 +37,68 @@ interface InteractiveMapProps {
 }
 
 export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: InteractiveMapProps) {
-  const markerRefs = useRef<Record<string, LeafletMarker | null>>({});
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<LeafletMap | null>(null);
+  const markerRefs = useRef<Record<string, LeafletMarker>>({});
 
   useEffect(() => {
-    Object.entries(markerRefs.current).forEach(([name, marker]) => {
-      if (!marker) return;
-      if (name === hoveredStop) {
-        marker.openTooltip();
-      } else {
-        marker.closeTooltip();
-      }
-    });
-  }, [hoveredStop]);
+    const container = containerRef.current;
+    if (!container || mapRef.current) return;
 
-  const activeStop = stops.find((s) => s.name === hoveredStop) ?? null;
+    // Leaflet tags its container; clearing a stale tag makes Strict Mode remounts safe.
+    const taggedContainer = container as HTMLDivElement & { _leaflet_id?: number };
+    if (taggedContainer._leaflet_id) delete taggedContainer._leaflet_id;
+
+    const map = L.map(container, { center: [-8.45, 115.15], zoom: 10, scrollWheelZoom: false });
+    mapRef.current = map;
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    stops.forEach((stop) => {
+      const tooltip = document.createElement("div");
+      const title = document.createElement("strong");
+      const note = document.createElement("p");
+      title.textContent = stop.name;
+      note.textContent = stop.note;
+      note.style.margin = "4px 0 0";
+      note.style.fontSize = "12px";
+      tooltip.append(title, note);
+
+      const marker = L.marker(stop.position, { icon: createIcon(stop.category) })
+        .bindTooltip(tooltip, { direction: "top", offset: [0, -28] })
+        .on("mouseover", () => onHoverStop(stop.name))
+        .on("mouseout", () => onHoverStop(null))
+        .addTo(map);
+      markerRefs.current[stop.name] = marker;
+    });
+
+    window.requestAnimationFrame(() => map.invalidateSize());
+
+    return () => {
+      markerRefs.current = {};
+      mapRef.current = null;
+      map.remove();
+      if (taggedContainer._leaflet_id) delete taggedContainer._leaflet_id;
+    };
+  }, [stops, onHoverStop]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    Object.entries(markerRefs.current).forEach(([name, marker]) => {
+      if (name === hoveredStop) marker.openTooltip();
+      else marker.closeTooltip();
+    });
+    const activeStop = stops.find((stop) => stop.name === hoveredStop);
+    if (map && activeStop) map.flyTo(activeStop.position, Math.max(map.getZoom(), 11), { duration: 0.6 });
+  }, [hoveredStop, stops]);
 
   return (
-    <div className="h-96 w-full">
-      <MapContainer
-        center={[-8.45, 115.15]}
-        zoom={10}
-        scrollWheelZoom={false}
-        className="h-full w-full"
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <FlyToStop target={activeStop} />
-        {stops.map((stop) => (
-          <Marker
-            key={stop.name}
-            position={stop.position}
-            icon={createIcon(stop.category)}
-            ref={(el) => {
-              markerRefs.current[stop.name] = el;
-            }}
-            eventHandlers={{
-              mouseover: () => onHoverStop(stop.name),
-              mouseout: () => onHoverStop(null),
-            }}
-          >
-            <Tooltip direction="top" offset={[0, -28]}>
-              <div className="max-w-[220px]">
-                <p className="font-semibold text-gray-900">{stop.name}</p>
-                <p className="text-xs text-gray-600">{stop.note}</p>
-              </div>
-            </Tooltip>
-          </Marker>
-        ))}
-      </MapContainer>
-      <div className="mt-3 flex flex-wrap gap-4 text-sm text-gray-600">
+    <div className="h-[470px] w-full lg:h-[620px]">
+      <div ref={containerRef} className="h-full w-full" aria-label="Interactive map of Bali tour stops" />
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-black/55">
         {(Object.keys(CATEGORY_META) as MapCategory[]).map((key) => (
-          <span key={key} className="flex items-center gap-2">
-            <span
-              className="inline-block h-3 w-3 rounded-full"
-              style={{ backgroundColor: CATEGORY_META[key].color }}
-            />
-            {CATEGORY_META[key].label}
-          </span>
+          <span key={key} className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: CATEGORY_META[key].color }} />{CATEGORY_META[key].label}</span>
         ))}
       </div>
     </div>

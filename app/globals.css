@@ -1,104 +1,117 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
-@layer base {
-  html {
-    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  }
-
-  body {
-    @apply bg-white text-gray-900 antialiased;
-  }
+:root {
+  --ink: #20241f;
+  --forest: #425f32;
+  --forest-dark: #263b27;
+  --leaf: #79924f;
+  --lime: #b6cd72;
+  --cream: #f4f1e8;
+  --paper: #fbfaf6;
+  --sand: #d9c9aa;
 }
 
-@layer components {
-  .container-padding {
-    @apply px-4 sm:px-6 lg:px-8;
-  }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), Arial, sans-serif;
+}
+a, button { -webkit-tap-highlight-color: transparent; }
+button, input, select, textarea { font: inherit; }
+::selection { background: var(--lime); color: var(--forest-dark); }
 
-  .container-max {
-    @apply mx-auto max-w-7xl;
-  }
+@layer components {
+  .container-padding { @apply px-5 sm:px-8 lg:px-12; }
+  .container-max { @apply mx-auto max-w-7xl; }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-primary-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 rounded-none px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-white transition duration-300;
+    background: var(--forest);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
   }
-
+  .btn-primary:hover { background: var(--forest-dark); transform: translateY(-2px); }
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border-2 border-primary-600 px-6 py-3 font-semibold text-primary-600 transition-all duration-200 hover:bg-primary-50 active:scale-95;
+    @apply inline-flex items-center justify-center gap-2 rounded-none border px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] transition duration-300;
+    border-color: var(--forest);
+    color: var(--forest);
   }
-
+  .btn-secondary:hover { background: var(--forest); color: white; }
   .btn-outline {
-    @apply inline-flex items-center justify-center rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-50 active:scale-95;
+    @apply inline-flex items-center justify-center border border-white/50 px-6 py-3 text-xs font-bold uppercase tracking-[0.18em] text-white transition;
   }
+  .btn-outline:hover { background: white; color: var(--forest-dark); }
 
+  .eyebrow, .badge {
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em];
+    color: var(--forest);
+  }
+  .eyebrow::before, .badge::before {
+    content: "";
+    width: 1.8rem;
+    height: 1px;
+    background: currentColor;
+  }
   .section-title {
-    @apply text-4xl font-bold text-gray-900 sm:text-5xl;
+    @apply text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] sm:text-5xl lg:text-6xl;
+    font-family: var(--font-display), var(--font-body), sans-serif;
   }
-
-  .section-subtitle {
-    @apply mt-4 text-xl text-gray-600;
+  .section-subtitle { @apply mt-5 max-w-2xl text-base leading-7 text-black/60; }
+  .script {
+    font-family: var(--font-script), "Brush Script MT", cursive;
+    color: var(--leaf);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-transform: none;
   }
-
   .card {
-    @apply rounded-2xl border border-gray-200 bg-white p-6 shadow-elevation-1 transition-all duration-300 hover:shadow-elevation-2;
+    @apply border-0 bg-white p-0 shadow-[0_18px_45px_rgb(30_42_25/0.10)] transition duration-500;
   }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 24px 55px rgb(30 42 25 / .16); }
 
-  .badge {
-    @apply inline-block rounded-full bg-primary-100 px-3 py-1 text-sm font-semibold text-primary-700;
+  .paper-edge { position: relative; }
+  .paper-edge::before, .paper-edge::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background: var(--paper);
+    clip-path: polygon(0 38%, 4% 62%, 9% 35%, 15% 60%, 21% 42%, 29% 66%, 36% 36%, 43% 58%, 51% 32%, 59% 62%, 66% 40%, 74% 67%, 82% 35%, 90% 61%, 96% 40%, 100% 56%, 100% 100%, 0 100%);
+  }
+  .paper-edge::before { top: -1px; transform: rotate(180deg); }
+  .paper-edge::after { bottom: -1px; }
+  .photo-shade::after {
+    content: "";
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, rgb(17 29 20 / .82), rgb(17 29 20 / .26) 62%, rgb(17 29 20 / .08));
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  .smooth-scroll {
-    scroll-behavior: smooth;
-  }
-
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+.animate-rise { animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+.leaflet-container { font-family: var(--font-body), Arial, sans-serif; }
 
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
 }

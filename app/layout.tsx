@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Caveat, Geist, Oswald } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({ subsets: ["latin"] });
+const geist = Geist({ subsets: ["latin"], variable: "--font-body" });
+const oswald = Oswald({ subsets: ["latin"], variable: "--font-display" });
+const caveat = Caveat({ subsets: ["latin"], variable: "--font-script" });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://vwtourbali.com";
 const SITE_NAME = "Bali Safari Tour | VW Tour Bali";
@@ -90,7 +92,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#4338ca",
+  themeColor: "#263b27",
 };
 
 const jsonLd = {
@@ -122,7 +124,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`${geist.variable} ${oswald.variable} ${caveat.variable} scroll-smooth`}>
       <head>
         <meta charSet="utf-8" />
         <script
@@ -130,7 +132,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${geist.className} antialiased`}>{children}</body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

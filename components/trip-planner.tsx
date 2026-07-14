@@ -110,81 +110,70 @@ export default function TripPlanner() {
   const [hoveredStop, setHoveredStop] = useState<string | null>(null);
 
   return (
-    <section className="py-20 lg:py-32">
+    <section id="content" className="py-24 lg:py-32">
       <div className="container-max container-padding">
-        <div className="mb-16 max-w-2xl">
-          <span className="badge">Trip Planner</span>
-          <h1 className="section-title mb-4 mt-4">Map Your Bali Safari Route</h1>
-          <p className="section-subtitle">
-            Use the map and itinerary guide below to plan how much of Bali you want to cover -
-            from a quick south-coast loop to a full island route.
-          </p>
+        <div className="mb-14 grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div><p className="script text-4xl">Make the island yours</p><h2 className="mt-1 font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.92] tracking-tight sm:text-6xl">Plot your<br />perfect route</h2></div>
+          <p className="max-w-xl text-base leading-7 text-black/55 lg:ml-auto">Start with the places that pull you in. Hover a route point, compare trip lengths, then send us your shortlist—we’ll turn it into a day that flows.</p>
         </div>
 
-        {/* Map */}
-        <div className="mb-16 overflow-hidden rounded-lg shadow-elevation-1">
-          <InteractiveMap stops={stops} hoveredStop={hoveredStop} onHoverStop={setHoveredStop} />
-        </div>
-
-        {/* Stops list */}
-        <div className="mb-16">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Route Points</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 lg:grid-cols-[1.45fr_.55fr]">
+          <div className="overflow-hidden bg-white shadow-[0_20px_55px_rgb(30_42_25/0.12)]"><InteractiveMap stops={stops} hoveredStop={hoveredStop} onHoverStop={setHoveredStop} /></div>
+          <div>
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[.2em] text-[#425f32]">Route points</p>
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-1">
             {stops.map((stop) => (
-              <div
+              <button
+                type="button"
                 key={stop.name}
                 onMouseEnter={() => setHoveredStop(stop.name)}
                 onMouseLeave={() => setHoveredStop(null)}
-                className={`rounded-lg border p-4 transition-colors ${
+                onFocus={() => setHoveredStop(stop.name)}
+                onBlur={() => setHoveredStop(null)}
+                className={`border-l-2 p-3 text-left transition-all ${
                   hoveredStop === stop.name
-                    ? "border-primary-600 bg-primary-50"
-                    : "border-gray-200"
+                    ? "border-[#79924f] bg-[#eef1e7] pl-5"
+                    : "border-black/10 bg-white"
                 }`}
               >
-                <p className="text-xs font-medium uppercase tracking-wide text-primary-600">
-                  {stop.region}
-                </p>
-                <p className="mt-1 font-semibold text-gray-900">{stop.name}</p>
-                <p className="mt-1 text-sm text-gray-600">{stop.note}</p>
-              </div>
+                <p className="text-[9px] font-bold uppercase tracking-[.16em] text-[#79924f]">{stop.region}</p>
+                <p className="mt-1 text-sm font-bold">{stop.name}</p>
+                <p className="mt-1 hidden text-xs leading-5 text-black/50 lg:block">{stop.note}</p>
+              </button>
             ))}
+            </div>
           </div>
         </div>
 
-        {/* Itinerary planner */}
-        <div>
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Plan by Trip Length</h2>
-          <div className="grid gap-6 lg:grid-cols-3">
+        <div id="itineraries" className="mt-28 scroll-mt-24">
+          <div className="mb-10 text-center"><p className="script text-4xl">How much Bali fits?</p><h2 className="font-[family-name:var(--font-display)] text-4xl font-black uppercase tracking-tight sm:text-5xl">Plan by trip length</h2></div>
+          <div className="grid gap-5 lg:grid-cols-3">
             {itineraries.map((plan) => (
-              <div key={plan.days} className="rounded-lg border border-gray-200 p-6">
-                <span className="badge">{plan.days}</span>
-                <h3 className="mb-2 mt-4 text-xl font-bold text-gray-900">{plan.title}</h3>
-                <p className="mb-4 text-sm text-gray-600">{plan.summary}</p>
-                <ol className="space-y-2">
+              <article key={plan.days} className="group bg-white p-7 shadow-[0_16px_45px_rgb(30_42_25/0.08)] transition duration-500 hover:-translate-y-2 hover:bg-[#425f32] hover:text-white">
+                <span className="text-[10px] font-bold uppercase tracking-[.2em] text-[#79924f]">{plan.days}</span>
+                <h3 className="mb-3 mt-4 font-[family-name:var(--font-display)] text-2xl font-black uppercase leading-none">{plan.title}</h3>
+                <p className="mb-5 text-sm leading-6 text-black/50 group-hover:text-white/60">{plan.summary}</p>
+                <ol className="space-y-2 border-t border-black/10 pt-5 group-hover:border-white/15">
                   {plan.route.map((stop, i) => (
-                    <li key={stop} className="flex gap-2 text-sm text-gray-700">
-                      <span className="font-semibold text-primary-600">{i + 1}.</span>
+                    <li key={stop} className="flex gap-2 text-xs text-black/65 group-hover:text-white/75">
+                      <span className="font-bold text-[#79924f]">{String(i + 1).padStart(2, "0")}</span>
                       {stop}
                     </li>
                   ))}
                 </ol>
-              </div>
+              </article>
             ))}
           </div>
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="mb-4 text-gray-600">Let a professional driver-guide handle the route.</p>
-          <a href="https://wa.me/6281237812783" className="btn-primary">
-            Book Your Safari Route
-          </a>
-          <p className="mt-6 text-sm text-gray-500">
+        <div className="mt-20 border-t border-black/10 pt-8 text-center">
+          <p className="text-xs leading-6 text-black/45">
             Want more detail on each stop? Read{" "}
-            <a href={SITES.gobali.url} className="text-primary-600 hover:underline">
+            <a href={SITES.gobali.url} className="font-bold text-[#425f32] hover:underline">
               our full attraction guides
             </a>{" "}
             at {SITES.gobali.url.replace("https://", "")}, or see{" "}
-            <a href={SITES.vwbali.url} className="text-primary-600 hover:underline">
+            <a href={SITES.vwbali.url} className="font-bold text-[#425f32] hover:underline">
               what past guests experienced
             </a>{" "}
             at {SITES.vwbali.url.replace("https://", "")}.
