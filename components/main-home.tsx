@@ -1,13 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import Header from "@/components/header";
-
-const tours = [
-  { name: "Ubud & Sacred Bali", place: "Central Bali", time: "Full day", image: "/gallerypics/bali_vw_02.jpg", text: "Temple courtyards, village lanes, Monkey Forest and the creative heart of Ubud." },
-  { name: "Rice Terraces & Temples", place: "Tabanan", time: "Full day", image: "/gallerypics/bali_vw_04.jpg", text: "Open-road views through Jatiluwih, coffee country and Bali's most beautiful water temples." },
-  { name: "Volcano Highlands", place: "Kintamani", time: "Full day", image: "/tourpics/volcano.jpg", text: "Cool mountain air, Mount Batur views and backroads that were made for an open-top VW." },
-  { name: "Coast & Sunset", place: "South Bali", time: "Half or full day", image: "/gallerypics/bali_vw_03.jpg", text: "Clifftop temples, hidden beaches and a golden-hour drive along the southern coast." },
-];
+import FullDayTours from "@/components/full-day-tours";
 
 const moments = [
   { image: "/gallerypics/bali_vw_08.jpg", title: "Village roads", label: "Slow travel" },
@@ -60,31 +53,7 @@ export default function MainHome() {
         <div className="absolute bottom-0 left-0 z-10 flex w-full justify-end px-5 pb-5 text-[10px] uppercase tracking-[.2em] text-white/60 sm:px-12">Private · Flexible · Island-wide</div>
       </div>
 
-      <section id="tours" className="relative py-24 lg:py-32">
-        <div className="container-max container-padding">
-          <div className="grid gap-12 lg:grid-cols-[.72fr_2.28fr] lg:items-center">
-            <div>
-              <p className="script text-3xl">Choose your road</p>
-              <h2 className="mt-1 font-[family-name:var(--font-display)] text-4xl font-black uppercase leading-none tracking-tight">Bali, your way</h2>
-              <p className="mt-5 text-sm leading-6 text-black/60">Pick a favourite route or build your own. Every day is private, flexible and paced around you.</p>
-              <Link href="/tours" className="mt-7 inline-flex items-center gap-3 text-[11px] font-bold uppercase tracking-[.18em] text-[#425f32]"><span className="grid h-7 w-7 place-items-center rounded-full bg-[#79924f] text-white">→</span> See all possibilities</Link>
-            </div>
-            <div className="hide-scrollbar -mx-5 flex snap-x gap-4 overflow-x-auto px-5 pb-8 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0">
-              {tours.map((tour, index) => (
-                <article key={tour.name} className={`${index === 0 ? "lg:-translate-y-5" : index === 2 ? "lg:translate-y-5" : ""} group relative min-h-[390px] min-w-[72vw] snap-center overflow-hidden bg-[#263b27] text-white sm:min-w-[280px] lg:min-w-0`}>
-                  <Image src={tour.image} alt={tour.name} fill className="object-cover transition duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <p className="text-[9px] font-bold uppercase tracking-[.2em] text-white/65">{tour.place} · {tour.time}</p>
-                    <h3 className="mt-2 font-[family-name:var(--font-display)] text-2xl font-bold uppercase leading-none">{tour.name}</h3>
-                    <p className="mt-3 max-h-0 overflow-hidden text-xs leading-5 text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100">{tour.text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <FullDayTours />
 
       <section id="why-us" className="paper-edge relative min-h-[660px] overflow-hidden bg-[#425f32] text-white">
         <Image src="/gallerypics/bali_vw_16.jpg" alt="Bali countryside seen from a classic VW" fill className="object-cover object-center opacity-45" />

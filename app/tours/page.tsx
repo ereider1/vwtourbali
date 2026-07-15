@@ -5,78 +5,63 @@ import EditorialFooter from "@/components/editorial-footer";
 import { SITES } from "@/lib/domains";
 
 const tours = [
-  {
-    name: "Bali Beach Tour",
-    duration: "Half day · Afternoon",
-    summary: "A relaxed south-coast escape from white-sand coves to dinner beside Jimbaran Bay.",
-    stops: ["Pandawa Beach", "Melasti Beach", "Jimbaran Bay"],
-  },
+
   {
     name: "Bali Temples Tour",
     duration: "Full day · Culture",
     summary: "Trace Bali's spiritual landscape through mountain sanctuaries, holy springs and ancient stone shrines.",
     stops: ["Kehen Temple", "Besakih Temple", "Tirta Empul", "Gunung Kawi", "Goa Gajah"],
   },
-  {
-    name: "Uluwatu Sunset Tour",
-    duration: "Half day · Sunset",
-    summary: "Clifftop temple views, the rhythmic Kecak fire dance and an easy evening on the coast.",
-    stops: ["Uluwatu Temple", "Kecak Fire Dance", "Jimbaran Bay"],
-  },
-  {
-    name: "Tanah Lot Sunset Tour",
-    duration: "Half day · Sunset",
-    summary: "A temple-and-forest route that reaches Bali's famous sea temple as the light turns gold.",
-    stops: ["Taman Ayun Temple", "Alas Kedaton", "Tanah Lot Temple"],
-  },
-  {
-    name: "Ubud Waterfall Tour",
-    duration: "Half day · Ubud",
-    summary: "A compact Ubud day mixing a powerful waterfall, rice-field views and the town's cultural heart.",
-    stops: ["Tegenungan Waterfall", "Tegalalang Rice Terrace", "Ubud Palace", "Ubud Art Market"],
-  },
+
   {
     name: "Bali Waterfall Tour",
     duration: "Full day · Nature",
     summary: "Go deeper into Bali's green interior on a circuit of four very different jungle waterfalls.",
     stops: ["Tukad Cepung", "Tibumana", "Kanto Lampo", "Tegenungan"],
   },
-  {
-    name: "Mt. Batur Trekking",
-    duration: "Sunrise · Active",
-    summary: "A pre-dawn guided climb to watch first light spread across Bali's volcanic highlands.",
-    stops: ["Mount Batur trailhead", "Sunrise summit", "Volcanic landscape"],
-  },
+
   {
     name: "Kintamani Volcano Tour",
     duration: "Full day · Highlands",
     summary: "Culture, craft villages and rice terraces on the road to Mount Batur and its crater lake.",
     stops: ["Barong Dance", "Tegalalang Rice Terrace", "Mount Batur View", "Tirta Empul"],
   },
+  
+  {
+    name: "Uluwatu Sunset Tour",
+    duration: "Half day · Sunset",
+    summary: "Clifftop temple views, the rhythmic Kecak fire dance and an easy evening on the coast.",
+    stops: ["Uluwatu Temple", "Kecak Fire Dance", "Jimbaran Bay"],
+  },
+  
+  {
+    name: "Bali Swing and Ubud Tour",
+    duration: "Full day · Scenic",
+    summary: "Experience incredible views of Bali, local villages, and the Ubud Market.",
+    stops: ["Bali Swing, Ubud Monkey Forest, Ubud Royal Palace, Ubud Art Market, Tegalalang Rice Terrace"],
+  },
+
   {
     name: "Jatiluwih & Tanah Lot Tour",
     duration: "Full day · Scenic",
     summary: "Bali's grandest rice terraces, highland temples and an unforgettable sea-temple finale.",
     stops: ["Taman Ayun Temple", "Ulun Danu Beratan", "Jatiluwih Rice Terraces", "Tanah Lot"],
   },
+
   {
-    name: "The Gates of Heaven Tour",
+    name: "Gates of Heaven Tour",
     duration: "Full day · East Bali",
     summary: "An early journey east for mountain-framed temple gates, water palaces and traditional villages.",
     stops: ["Lempuyang Temple", "Tirta Gangga", "Taman Ujung", "Virgin Beach", "Tenganan Village"],
   },
+
   {
     name: "Instagram Tour",
     duration: "Full day · Photo route",
     summary: "A camera-ready loop through Bali's best-known temple, volcano, terrace and swing viewpoints.",
     stops: ["Lempuyang Temple", "Tirta Gangga", "Kintamani Viewpoint", "Tegalalang", "Bali Swing"],
   },
-  {
-    name: "Shopping & Spa Tour",
-    duration: "Half day · Slow pace",
-    summary: "Meet Bali's makers in their craft villages, then wind down with a restorative spa ritual.",
-    stops: ["Tohpati textiles", "Celuk silver", "Ubud paintings", "Mas woodcarving", "Balinese spa"],
-  },
+
 ];
 
 export const metadata: Metadata = {
