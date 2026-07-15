@@ -99,34 +99,29 @@ const stops: MapStop[] = [
 
 const itineraries = [
   {
-    days: "1 Day",
+    days: "Half Day",
     title: "South Bali Highlights",
-    route: ["Uluwatu Temple", "Tanah Lot"],
+    route: ["Uluwatu Temple", "Beaches", "Sunset dinner"],
     summary:
-      "A compact loop through South Bali's most iconic coastal sights, ending with sunset at Tanah Lot.",
+      "A compact loop through South Bali's most iconic coastal sights, ending with Sunset Dinner on the coast.",
   },
   {
-    days: "3 Days",
+    days: "Full Day",
     title: "Temples, Terraces & Culture",
     route: ["Sacred Monkey Forest", "Ubud Art Market", "Gunung Kawi", "Jatiluwih Rice Terraces", "Tanah Lot"],
     summary:
       "Combine Ubud's culture with the rice terrace landscapes further north, finishing on the coast.",
   },
   {
-    days: "5 Days",
-    title: "Full Island Safari",
+    days: "Full Day",
+    title: "Instagram Tour",
     route: [
-      "Uluwatu Temple",
       "Tanah Lot",
-      "Sacred Monkey Forest",
-      "Ubud Art Market",
-      "Gunung Kawi",
       "Jatiluwih Rice Terraces",
       "Tabanan Countryside",
-      "Mount Batur Viewpoint",
     ],
     summary:
-      "The complete route from the southern coast to the volcanic highlands, covering every stop on this map.",
+      "The complete route from the beautiful rice terraces to the volcanic highlands, covering every stop for the perfect photo.",
   },
 ];
 
