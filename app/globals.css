@@ -214,6 +214,29 @@ button, input, select, textarea { font: inherit; }
   text-transform: uppercase;
 }
 
+.map-stop-card__favorite {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+  padding: 7px 8px;
+  border: 1px solid rgb(66 95 50 / .2);
+  border-radius: 4px;
+  background: #eef1e7;
+  color: #425f32;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.map-stop-card__favorite:hover,
+.map-stop-card__favorite:focus-visible,
+.map-stop-card__favorite.is-favorite {
+  background: #425f32;
+  color: #fff;
+}
+
 .map-stop-card__link:hover,
 .map-stop-card__link:focus-visible {
   text-decoration: underline;

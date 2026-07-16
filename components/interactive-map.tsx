@@ -40,12 +40,23 @@ interface InteractiveMapProps {
   stops: MapStop[];
   hoveredStop: string | null;
   onHoverStop: (name: string | null) => void;
+  favoriteStops: string[];
+  onAddFavorite: (name: string) => void;
+  onToggleFavorite: (name: string) => void;
 }
 
-export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: InteractiveMapProps) {
+export default function InteractiveMap({
+  stops,
+  hoveredStop,
+  onHoverStop,
+  favoriteStops,
+  onAddFavorite,
+  onToggleFavorite,
+}: InteractiveMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const tooltipRefs = useRef<Record<string, LeafletTooltip>>({});
+  const favoriteButtonRefs = useRef<Record<string, HTMLButtonElement>>({});
 
   useEffect(() => {
     const container = containerRef.current;
@@ -97,11 +108,20 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
       link.target = "_blank";
       link.rel = "noopener noreferrer";
       link.textContent = "learn more →";
+      const favoriteButton = document.createElement("button");
+      favoriteButton.type = "button";
+      favoriteButton.className = "map-stop-card__favorite";
+      favoriteButton.setAttribute("aria-label", `Add ${stop.name} to tour favorites`);
+      favoriteButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        onToggleFavorite(stop.name);
+      });
+      favoriteButtonRefs.current[stop.name] = favoriteButton;
 
       title.textContent = stop.name;
       note.textContent = stop.note;
       detail.textContent = stop.detail;
-      content.append(meta, title, note, detail, link);
+      content.append(meta, title, note, detail, favoriteButton, link);
       tooltip.append(image, content);
 
       let closeTimer: number | undefined;
@@ -133,6 +153,9 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
           cancelClose();
           onHoverStop(stop.name);
         })
+        .on("click", () => {
+          onAddFavorite(stop.name);
+        })
         .on("mouseout blur", closeTooltip)
         .addTo(map);
       tooltipRefs.current[stop.name] = mapTooltip;
@@ -145,11 +168,21 @@ export default function InteractiveMap({ stops, hoveredStop, onHoverStop }: Inte
     return () => {
       cancelTooltipClosures.forEach((cancelClose) => cancelClose());
       tooltipRefs.current = {};
+      favoriteButtonRefs.current = {};
       mapRef.current = null;
       map.remove();
       if (taggedContainer._leaflet_id) delete taggedContainer._leaflet_id;
     };
-  }, [stops, onHoverStop]);
+  }, [stops, onHoverStop, onAddFavorite, onToggleFavorite]);
+
+  useEffect(() => {
+    Object.entries(favoriteButtonRefs.current).forEach(([name, button]) => {
+      const isFavorite = favoriteStops.includes(name);
+      button.textContent = isFavorite ? "✓ Added to favorites" : "+ Add to favorites";
+      button.classList.toggle("is-favorite", isFavorite);
+      button.setAttribute("aria-label", `${isFavorite ? "Remove" : "Add"} ${name} ${isFavorite ? "from" : "to"} tour favorites`);
+    });
+  }, [favoriteStops]);
 
   useEffect(() => {
     const map = mapRef.current;
