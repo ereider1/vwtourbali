@@ -45,7 +45,7 @@ export default function VwBaliPage() {
       <BaliVideoStories />
       <GuestShowcase />
       <FullDayTours />
-      <DomainBooking script="Make your own memories" title="Be part of the next story" description="Tell us who you’re traveling with and what makes a perfect Bali day. We’ll help shape the route—and leave plenty of room for the unplanned moments." image="/gallerypics/bali_vw_24.jpg" />
+      <DomainBooking script="Make your own memories" title="Be part of the next story" description="Tell us who you're traveling with and what makes a perfect Bali day. We'll help shape the route—and leave plenty of room for the unplanned moments." image="/gallerypics/bali_vw_24.jpg" />
       <EditorialFooter current="vwbali" />
     </main>
   );

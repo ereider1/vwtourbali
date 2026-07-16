@@ -4,39 +4,15 @@ import Image from "next/image";
 import { SITES } from "@/lib/domains";
 
 const captions = [
-  "The Sitorus family soaking up the sunrise on the ridge road above Kintamani.",
-  "First-timers in the convertible, cruising past Tabanan's rice terraces.",
-  "A honeymoon couple pulling over for photos on the coastal road to Uluwatu.",
-  "Friends from Melbourne catching golden hour on the way back from Tanah Lot.",
-  "A solo traveler chatting with our driver at a roadside coffee stop.",
-  "Grandparents and grandkids sharing the back seat on a full-day safari.",
-  "Guests waving from the VW outside Ubud's morning market.",
-  "A group of four wrapped in sarongs before a temple visit.",
-  "Newlyweds mid-laugh as the top comes down for the coastal stretch.",
-  "A birthday group posing beside the car at a jungle waterfall stop.",
-  "Kids grinning through the open window on the drive to Jatiluwih.",
-  "Guests toasting with fresh coconuts at a lunch stop in the hills.",
-  "A couple watching the sunset light hit the rice paddies.",
-  "Friends piling back into the VW after a Gunung Kawi temple climb.",
-  "A guest capturing the volcano views on the Kintamani rim road.",
-  "Two sisters sharing the front seat for the drive to Monkey Forest.",
-  "A family portrait in front of the car at Tanah Lot at low tide.",
-  "Guests taking a break at a Tabanan viewpoint, coffee in hand.",
-  "A couple's engagement shoot using the VW as a backdrop.",
-  "Friends mid-conversation with our driver-guide along a quiet backroad.",
-  "A guest leaning out to photograph the terraces at Jatiluwih.",
-  "A group toasting the end of the day back at their hotel drop-off.",
-  "Kids waving flags out the window on the way to the beach.",
-  "A couple watching the surf at Uluwatu from the clifftop.",
-  "Guests sharing snacks in the back seat between stops.",
-  "The whole group posing for a final photo before saying goodbye.",
+
+
 ];
 
 const guestPhotos = Array.from({ length: 26 }, (_, i) => {
   const n = String(i + 1).padStart(2, "0");
   return {
     src: `/gallerypics/bali_vw_${n}.jpg`,
-    alt: captions[i] ?? `Guests on a VW Bali safari tour, photo ${n}`,
+    alt: captions[i] ?? `Guests on a VW Bali safari tour 2026, photo ${n}`,
   };
 });
 

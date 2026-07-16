@@ -104,7 +104,7 @@ export default function ToursPage() {
         <div className="container-max container-padding relative z-10 flex min-h-[54vh] items-end pb-16 pt-40 lg:items-center lg:pb-0">
           <div className="max-w-4xl animate-rise">
             <p className="text-[10px] font-bold uppercase tracking-[.28em] text-white/65">Private · Flexible · Open-top VW</p>
-            <h1 className="mt-5 font-[family-name:var(--font-display)] text-[clamp(3.4rem,7vw,6.8rem)] font-black uppercase leading-[.82] tracking-[-.05em]">
+            <h1 className="mt-5 font-(family-name:--font-display) text-[clamp(3.4rem,7vw,6.8rem)] font-black uppercase leading-[.82] tracking-[-.05em]">
               Choose your<br /><span className="script inline-block -rotate-2 text-[1.04em] text-[#b6cd72]">Bali road</span>
             </h1>
             <p className="mt-7 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
