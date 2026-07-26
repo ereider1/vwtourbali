@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { SITES } from "@/lib/domains";
 
 const captions: string[] = [
@@ -16,7 +17,23 @@ const guestPhotos = Array.from({ length: 26 }, (_, i) => {
   };
 });
 
+type UploadedGuestPhoto = {
+  src: string;
+  alt: string;
+};
+
 export default function GuestShowcase() {
+  const [uploadedPhotos, setUploadedPhotos] = useState<UploadedGuestPhoto[]>([]);
+
+  useEffect(() => {
+    fetch("/api/review-photos")
+      .then((response) => (response.ok ? response.json() : { photos: [] }))
+      .then((data: { photos?: UploadedGuestPhoto[] }) => setUploadedPhotos(data.photos ?? []))
+      .catch(() => setUploadedPhotos([]));
+  }, []);
+
+  const allGuestPhotos = [...uploadedPhotos, ...guestPhotos];
+
   return (
     <section id="content" className="py-24 lg:py-32">
       <div className="container-max container-padding">
@@ -26,18 +43,22 @@ export default function GuestShowcase() {
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
-          {guestPhotos.map((photo, index) => (
+          {allGuestPhotos.map((photo, index) => (
             <div
               key={photo.src}
               className={`${index === 0 || index === 9 || index === 18 ? "col-span-2 row-span-2" : ""} group relative aspect-square overflow-hidden bg-[#263b27]`}
             >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              {photo.src.startsWith("https://") ? (
+                <img src={photo.src} alt={photo.alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              ) : (
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              )}
               <div className="absolute inset-0 flex items-end bg-linear-to-t from-black/75 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <p className="max-w-sm text-xs leading-5 text-white/85">{photo.alt}</p>
               </div>

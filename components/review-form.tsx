@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
+import { upload } from "@vercel/blob/client";
 
 const whatsappNumber = "6281237812783";
 
@@ -13,6 +14,7 @@ export default function ReviewForm() {
   const [whatsappUrl, setWhatsappUrl] = useState("");
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState("");
+  const [photoUploadError, setPhotoUploadError] = useState("");
 
   function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
     const selectedPhoto = event.target.files?.[0] ?? null;
@@ -26,7 +28,7 @@ export default function ReviewForm() {
     setPhotoPreview(URL.createObjectURL(selectedPhoto));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const name = String(form.get("name") || "A guest");
@@ -51,6 +53,21 @@ export default function ReviewForm() {
       "",
       permission,
     ].filter(Boolean).join("\n");
+
+    if (photo) {
+      try {
+        const safeName = photo.name.toLowerCase().replace(/[^a-z0-9.-]+/g, "-").slice(-80);
+        await upload(`review-photos/${Date.now()}-${safeName}`, photo, {
+          access: "public",
+          handleUploadUrl: "/api/review-photo/upload",
+        });
+        setPhotoUploadError("");
+      } catch {
+        setPhotoUploadError("We couldn't upload that photo. Please try again or choose a smaller image.");
+        return;
+      }
+    }
+
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     setWhatsappUrl(url);
 
@@ -74,7 +91,7 @@ export default function ReviewForm() {
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#b6cd72] text-2xl font-bold text-[#263b27]" aria-hidden="true">✓</div>
         <p className="mt-10 text-[10px] font-bold uppercase tracking-[.2em] text-[#b6cd72]">Thank you for taking the time</p>
         <h3 className="mt-4 max-w-lg font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.88] tracking-tight sm:text-6xl">Your story is on its way</h3>
-        <p className="mt-7 max-w-lg text-sm leading-7 text-white/65">WhatsApp should have opened with your review ready to send{photo ? " — add your photo to the chat before tapping send" : ""}. It will reach Bobby and the team.</p>
+        <p className="mt-7 max-w-lg text-sm leading-7 text-white/65">{photo ? "Your photo has been added to the guest gallery at balivw.tours/#content. " : ""}WhatsApp should have opened with your review ready to send. It will reach Bobby and the team.</p>
         <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary mt-9 bg-[#79924f]">Open WhatsApp again <span aria-hidden>↗</span></a>
         <a href="/" className="ml-5 inline-flex text-[10px] font-bold uppercase tracking-[.18em] text-white/60 transition hover:text-white">Back to the road</a>
       </div>
@@ -126,6 +143,7 @@ export default function ReviewForm() {
           </span>
           <input className="sr-only" type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoChange} />
         </label>
+        {photoUploadError ? <p className="mt-2 text-xs text-[#a04832]">{photoUploadError}</p> : null}
       </div>
 
       <label className="mt-8 flex cursor-pointer items-start gap-3 text-xs leading-5 text-black/55"><input className="mt-0.5 h-4 w-4 accent-[#425f32]" type="checkbox" name="permission" /> <span>It&apos;s okay to share my review on the website or social media.</span></label>

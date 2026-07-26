@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.2",
+    "@vercel/blob": "^2.6.1",
     "country-flag-icons": "^1.6.20",
     "framer-motion": "^10.16.4",
     "glightbox": "^3.2.0",
