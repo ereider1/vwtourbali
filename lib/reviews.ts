@@ -110,7 +110,7 @@ export async function savePublishedReview(input: {
   }
 
   await put(`${REVIEW_PREFIX}${id}.json`, JSON.stringify(stored), {
-    access: "private",
+    access: "public",
     addRandomSuffix: false,
     contentType: "application/json",
   });
@@ -129,7 +129,7 @@ export async function listPublishedReviews(): Promise<PublishedReview[]> {
       blobs
         .filter((blob) => blob.pathname.endsWith(".json"))
         .map(async (blob) => {
-          const result = await get(blob.pathname, { access: "private", useCache: false });
+          const result = await get(blob.pathname, { access: "public", useCache: false });
           if (!result || result.statusCode !== 200) return null;
 
           const value = (await new Response(result.stream).json()) as StoredReview;
