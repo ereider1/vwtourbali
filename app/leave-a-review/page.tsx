@@ -50,6 +50,21 @@ export default function LeaveAReviewPage() {
         <div className="absolute bottom-0 left-0 z-10 flex w-full justify-end px-5 pb-5 text-[10px] uppercase tracking-[.2em] text-white/60 sm:px-12">Real guests · Real stories · Always appreciated</div>
       </section>
 
+      <section id="review-form" className="scroll-mt-24 py-20 lg:py-32">
+        <div className="container-max container-padding grid gap-12 lg:grid-cols-[.75fr_1.25fr] lg:items-start lg:gap-20">
+          <aside className="lg:sticky lg:top-24">
+            <p className="eyebrow">Guest book</p>
+            <h2 className="mt-5 font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.88] tracking-tight sm:text-6xl">Leave a little<br /><span className="script text-[#79924f]">Bali behind</span></h2>
+            <p className="mt-6 max-w-md text-sm leading-7 text-black/58">This should take about five minutes. We&apos;ll send your review straight to Bobby and the team through WhatsApp so it lands with the people who made your day.</p>
+            <div className="mt-10 border-l-2 border-[#b6cd72] pl-5">
+              <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#425f32]">A small promise</p>
+              <p className="mt-2 max-w-xs text-sm leading-6 text-black/55">We&apos;ll only share your words publicly if you say it&apos;s okay.</p>
+            </div>
+          </aside>
+          <ReviewForm />
+        </div>
+      </section>
+
       <section id="why-review" className="scroll-mt-24 bg-[#f0eee5] py-20 lg:py-28">
         <div className="container-max container-padding">
           <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
@@ -68,21 +83,6 @@ export default function LeaveAReviewPage() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section id="review-form" className="scroll-mt-24 py-20 lg:py-32">
-        <div className="container-max container-padding grid gap-12 lg:grid-cols-[.75fr_1.25fr] lg:items-start lg:gap-20">
-          <aside className="lg:sticky lg:top-24">
-            <p className="eyebrow">Guest book</p>
-            <h2 className="mt-5 font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.88] tracking-tight sm:text-6xl">Leave a little<br /><span className="script text-[#79924f]">Bali behind</span></h2>
-            <p className="mt-6 max-w-md text-sm leading-7 text-black/58">This should take about five minutes. We&apos;ll send your review straight to Bobby and the team through WhatsApp so it lands with the people who made your day.</p>
-            <div className="mt-10 border-l-2 border-[#b6cd72] pl-5">
-              <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#425f32]">A small promise</p>
-              <p className="mt-2 max-w-xs text-sm leading-6 text-black/55">We&apos;ll only share your words publicly if you say it&apos;s okay.</p>
-            </div>
-          </aside>
-          <ReviewForm />
         </div>
       </section>
 
