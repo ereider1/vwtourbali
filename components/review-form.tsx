@@ -34,7 +34,6 @@ export default function ReviewForm() {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const name = String(form.get("name") || "A guest");
-    const email = String(form.get("email") || "");
     const country = String(form.get("country") || "");
     const tour = String(form.get("tour") || "my Bali tour");
     const date = String(form.get("date") || "");
@@ -87,7 +86,6 @@ export default function ReviewForm() {
       "Hi Bobby, I’d like to leave a review for my Bali Safari Tour.",
       "",
       `Name: ${name}`,
-      email ? `Email: ${email}` : "",
       country ? `From: ${country}` : "",
       `Tour: ${tour}`,
       date ? `Tour date: ${date}` : "",
@@ -132,7 +130,6 @@ export default function ReviewForm() {
 
       <div className="mt-8 grid gap-7 sm:grid-cols-2">
         <label className="block"><span className={labelClass}>Your name *</span><input className={inputClass} name="name" required placeholder="The name you'd like us to use" /></label>
-        <label className="block"><span className={labelClass}>Email address</span><input className={inputClass} name="email" type="email" placeholder="Optional — so we can say thank you" /></label>
         <label className="block"><span className={labelClass}>Country / region</span><input className={inputClass} name="country" placeholder="Optional — where are you from?" /></label>
         <label className="block"><span className={labelClass}>Which tour did you take? *</span><select className={inputClass} name="tour" required defaultValue=""><option value="" disabled>Select a route</option><option>Bali Temples Tour</option><option>Bali Waterfall Tour</option><option>Kintamani Volcano Tour</option><option>Uluwatu Sunset Tour</option><option>Bali Swing and Ubud Tour</option><option>Jatiluwih & Tanah Lot Tour</option><option>Gates of Heaven Tour</option><option>A custom / private route</option></select></label>
         <label className="block"><span className={labelClass}>When did you travel?</span><input className={inputClass} name="date" type="date" /></label>
@@ -172,7 +169,7 @@ export default function ReviewForm() {
       <input className="hidden" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <label className="mt-8 flex cursor-pointer items-start gap-3 text-xs leading-5 text-black/55"><input className="mt-0.5 h-4 w-4 accent-[#425f32]" type="checkbox" name="permission" /> <span>It&apos;s okay to share my review on the website or social media.</span></label>
       {submissionError ? <p className="mt-4 text-xs leading-5 text-[#a04832]">{submissionError}</p> : null}
-      <p className="mt-5 text-[11px] leading-5 text-black/35">Your review will open in WhatsApp so you can check it before sending. We won&apos;t publish your email address.</p>
+      <p className="mt-5 text-[11px] leading-5 text-black/35">Your review will open in WhatsApp so you can check it before sending.</p>
       <button type="submit" className="btn-primary mt-8 w-full bg-[#425f32] py-4 sm:w-auto">Send my review <span aria-hidden>↗</span></button>
     </form>
   );
