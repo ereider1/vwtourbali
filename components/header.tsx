@@ -21,6 +21,7 @@ export default function Header({
     { label: "Our Story", href: "#why-us" },
     { label: "Moments", href: "#gallery" },
     { label: "Guest Stories", href: "#reviews" },
+    { label: "Leave a Review", href: "/leave-a-review" },
   ],
 }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { SITES } from "@/lib/domains";
 
-const captions = [
+const captions: string[] = [
 
 
 ];
