@@ -15,6 +15,8 @@ export default function ReviewForm() {
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState("");
   const [photoUploadError, setPhotoUploadError] = useState("");
+  const [submissionError, setSubmissionError] = useState("");
+  const [published, setPublished] = useState(false);
 
   function handlePhotoChange(event: ChangeEvent<HTMLInputElement>) {
     const selectedPhoto = event.target.files?.[0] ?? null;
@@ -33,34 +35,23 @@ export default function ReviewForm() {
     const form = new FormData(event.currentTarget);
     const name = String(form.get("name") || "A guest");
     const email = String(form.get("email") || "");
+    const country = String(form.get("country") || "");
     const tour = String(form.get("tour") || "my Bali tour");
     const date = String(form.get("date") || "");
     const highlights = String(form.get("highlights") || "");
     const review = String(form.get("review") || "");
-    const permission = form.get("permission") ? "Yes, you may share this review." : "Please keep this review private.";
-    const message = [
-      "Hi Bobby, I’d like to leave a review for my Bali Safari Tour.",
-      "",
-      `Name: ${name}`,
-      email ? `Email: ${email}` : "",
-      `Tour: ${tour}`,
-      date ? `Tour date: ${date}` : "",
-      `Rating: ${rating}/5`,
-      highlights ? `Favorite part: ${highlights}` : "",
-      photo ? "I have a photo to share with this review." : "",
-      "",
-      review,
-      "",
-      permission,
-    ].filter(Boolean).join("\n");
+    const permissionGranted = Boolean(form.get("permission"));
+    const permission = permissionGranted ? "Yes, you may share this review." : "Please keep this review private.";
+    let photoUrl = "";
 
     if (photo) {
       try {
         const safeName = photo.name.toLowerCase().replace(/[^a-z0-9.-]+/g, "-").slice(-80);
-        await upload(`review-photos/${Date.now()}-${safeName}`, photo, {
+        const uploadedPhoto = await upload(`review-photos/${Date.now()}-${safeName}`, photo, {
           access: "public",
           handleUploadUrl: "/api/review-photo/upload",
         });
+        photoUrl = uploadedPhoto.url;
         setPhotoUploadError("");
       } catch {
         setPhotoUploadError("We couldn't upload that photo. Please try again or choose a smaller image.");
@@ -68,20 +59,51 @@ export default function ReviewForm() {
       }
     }
 
+    if (permissionGranted) {
+      try {
+        const response = await fetch("/api/reviews", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            country,
+            rating,
+            review,
+            permission: true,
+            website: form.get("website") || "",
+          }),
+        });
+
+        if (!response.ok) throw new Error("Review could not be saved.");
+        setSubmissionError("");
+        setPublished(true);
+      } catch {
+        setSubmissionError("We couldn't add your review to the guest stories. Please try again.");
+        return;
+      }
+    }
+
+    const message = [
+      "Hi Bobby, I’d like to leave a review for my Bali Safari Tour.",
+      "",
+      `Name: ${name}`,
+      email ? `Email: ${email}` : "",
+      country ? `From: ${country}` : "",
+      `Tour: ${tour}`,
+      date ? `Tour date: ${date}` : "",
+      `Rating: ${rating}/5`,
+      highlights ? `Favorite part: ${highlights}` : "",
+      photo ? "I have a photo to share with this review." : "",
+      photoUrl ? `Photo link: ${photoUrl}` : "",
+      "",
+      review,
+      "",
+      permission,
+    ].filter(Boolean).join("\n");
+
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     setWhatsappUrl(url);
-
-    if (photo && navigator.canShare?.({ files: [photo] })) {
-      navigator.share({
-        title: "Bali Safari Tour review",
-        text: message,
-        files: [photo],
-      }).catch(() => {
-        window.open(url, "_blank", "noopener,noreferrer");
-      });
-    } else {
-      window.open(url, "_blank", "noopener,noreferrer");
-    }
+    window.open(url, "_blank", "noopener,noreferrer");
     setSubmitted(true);
   }
 
@@ -91,7 +113,7 @@ export default function ReviewForm() {
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#b6cd72] text-2xl font-bold text-[#263b27]" aria-hidden="true">✓</div>
         <p className="mt-10 text-[10px] font-bold uppercase tracking-[.2em] text-[#b6cd72]">Thank you for taking the time</p>
         <h3 className="mt-4 max-w-lg font-[family-name:var(--font-display)] text-5xl font-black uppercase leading-[.88] tracking-tight sm:text-6xl">Your story is on its way</h3>
-        <p className="mt-7 max-w-lg text-sm leading-7 text-white/65">{photo ? "Your photo has been added to the guest gallery at balivw.tours/#content. " : ""}WhatsApp should have opened with your review ready to send. It will reach Bobby and the team.</p>
+        <p className="mt-7 max-w-lg text-sm leading-7 text-white/65">{photo ? "Your photo has been added to the guest gallery at balivw.tours/#content. " : ""}{published ? "Your review is now in Stories Brought Home, and " : ""}WhatsApp should have opened with your review ready to send.</p>
         <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary mt-9 bg-[#79924f]">Open WhatsApp again <span aria-hidden>↗</span></a>
         <a href="/" className="ml-5 inline-flex text-[10px] font-bold uppercase tracking-[.18em] text-white/60 transition hover:text-white">Back to the road</a>
       </div>
@@ -111,6 +133,7 @@ export default function ReviewForm() {
       <div className="mt-8 grid gap-7 sm:grid-cols-2">
         <label className="block"><span className={labelClass}>Your name *</span><input className={inputClass} name="name" required placeholder="The name you'd like us to use" /></label>
         <label className="block"><span className={labelClass}>Email address</span><input className={inputClass} name="email" type="email" placeholder="Optional — so we can say thank you" /></label>
+        <label className="block"><span className={labelClass}>Country / region</span><input className={inputClass} name="country" placeholder="Optional — where are you from?" /></label>
         <label className="block"><span className={labelClass}>Which tour did you take? *</span><select className={inputClass} name="tour" required defaultValue=""><option value="" disabled>Select a route</option><option>Bali Temples Tour</option><option>Bali Waterfall Tour</option><option>Kintamani Volcano Tour</option><option>Uluwatu Sunset Tour</option><option>Bali Swing and Ubud Tour</option><option>Jatiluwih & Tanah Lot Tour</option><option>Gates of Heaven Tour</option><option>A custom / private route</option></select></label>
         <label className="block"><span className={labelClass}>When did you travel?</span><input className={inputClass} name="date" type="date" /></label>
       </div>
@@ -146,7 +169,9 @@ export default function ReviewForm() {
         {photoUploadError ? <p className="mt-2 text-xs text-[#a04832]">{photoUploadError}</p> : null}
       </div>
 
+      <input className="hidden" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <label className="mt-8 flex cursor-pointer items-start gap-3 text-xs leading-5 text-black/55"><input className="mt-0.5 h-4 w-4 accent-[#425f32]" type="checkbox" name="permission" /> <span>It&apos;s okay to share my review on the website or social media.</span></label>
+      {submissionError ? <p className="mt-4 text-xs leading-5 text-[#a04832]">{submissionError}</p> : null}
       <p className="mt-5 text-[11px] leading-5 text-black/35">Your review will open in WhatsApp so you can check it before sending. We won&apos;t publish your email address.</p>
       <button type="submit" className="btn-primary mt-8 w-full bg-[#425f32] py-4 sm:w-auto">Send my review <span aria-hidden>↗</span></button>
     </form>

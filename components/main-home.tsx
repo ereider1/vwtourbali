@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Header from "@/components/header";
 import FullDayTours from "@/components/full-day-tours";
+import { listPublishedReviews, type PublishedReview } from "@/lib/reviews";
 
 const moments = [
   { image: "/gallerypics/bali_vw_08.jpg", title: "Village roads", label: "Slow travel" },
@@ -9,7 +10,15 @@ const moments = [
   { image: "/gallerypics/bali_vw_22.jpg", title: "Golden hour", label: "Worth the detour" },
 ];
 
-export default function MainHome() {
+const featuredReviews: PublishedReview[] = [
+  { id: "sarah-j", q: "The most memorable day of our Bali trip. Bobby took us down roads we never would have found, and the car made everyone smile.", n: "Sarah J.", c: "United States", f: "/flags/US.svg", rating: 5, createdAt: "2026-01-01" },
+  { id: "emma-w", q: "It felt personal from the first message. No rushing, no hard sell—just a beautiful day through villages, rice fields and temples.", n: "Emma W.", c: "Australia", f: "/flags/AU.svg", rating: 5, createdAt: "2026-01-01" },
+];
+
+export default async function MainHome() {
+  const submittedReviews = await listPublishedReviews();
+  const reviews = [...featuredReviews, ...submittedReviews];
+
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbfaf6]">
       <div className="relative min-h-[92vh] bg-[#263b27] text-white">
@@ -93,8 +102,8 @@ export default function MainHome() {
         <div className="container-max container-padding">
           <div className="text-center"><p className="script text-4xl">Stories brought home</p><h2 className="font-[family-name:var(--font-display)] text-4xl font-black uppercase tracking-tight">From our guests</h2></div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-            {[{q:"The most memorable day of our Bali trip. Bobby took us down roads we never would have found, and the car made everyone smile.", n:"Sarah J.", c:"United States", f:"/flags/US.svg"},{q:"It felt personal from the first message. No rushing, no hard sell—just a beautiful day through villages, rice fields and temples.", n:"Emma W.", c:"Australia", f:"/flags/AU.svg"}].map((review) => (
-              <blockquote key={review.n} className="relative bg-white p-8 shadow-[0_20px_50px_rgb(30_42_25/0.08)] sm:p-10"><div className="text-sm tracking-[.18em] text-[#79924f]">★★★★★</div><p className="mt-5 text-lg leading-8 text-black/65">“{review.q}”</p><footer className="mt-7 flex items-center gap-3"><Image src={review.f} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover"/><div><b className="block text-xs uppercase tracking-[.12em]">{review.n}</b><span className="text-xs text-black/45">{review.c}</span></div></footer></blockquote>
+            {reviews.map((review) => (
+              <blockquote key={review.id} className="relative bg-white p-8 shadow-[0_20px_50px_rgb(30_42_25/0.08)] sm:p-10"><div className="text-sm tracking-[.18em] text-[#79924f]">{"★".repeat(review.rating)}<span className="text-black/15">{"★".repeat(5 - review.rating)}</span></div><p className="mt-5 text-lg leading-8 text-black/65">“{review.q}”</p><footer className="mt-7 flex items-center gap-3">{review.f ? <Image src={review.f} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /> : <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b6cd72] text-xs font-bold uppercase text-[#425f32]" aria-hidden="true">{review.n.slice(0, 1)}</span>}<div><b className="block text-xs uppercase tracking-[.12em]">{review.n}</b><span className="text-xs text-black/45">{review.c}</span></div></footer></blockquote>
             ))}
           </div>
         </div>
