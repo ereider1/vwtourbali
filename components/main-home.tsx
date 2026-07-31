@@ -15,6 +15,18 @@ const featuredReviews: PublishedReview[] = [
   { id: "emma-w", q: "It felt personal from the first message. No rushing, no hard sell—just a beautiful day through villages, rice fields and temples.", n: "Emma W.", c: "Australia", f: "/flags/AU.svg", rating: 5, createdAt: "2026-01-01" },
 ];
 
+function formatReviewDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
 export default async function MainHome() {
   const submittedReviews = await listPublishedReviews();
   const reviews = [...featuredReviews, ...submittedReviews];
@@ -102,9 +114,20 @@ export default async function MainHome() {
         <div className="container-max container-padding">
           <div className="text-center"><p className="script text-4xl">Stories brought home</p><h2 className="font-[family-name:var(--font-display)] text-4xl font-black uppercase tracking-tight">From our guests</h2></div>
           <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-            {reviews.map((review) => (
-              <blockquote key={review.id} className="relative bg-white p-8 shadow-[0_20px_50px_rgb(30_42_25/0.08)] sm:p-10"><div className="text-sm tracking-[.18em] text-[#79924f]">{"★".repeat(review.rating)}<span className="text-black/15">{"★".repeat(5 - review.rating)}</span></div><p className="mt-5 text-lg leading-8 text-black/65">“{review.q}”</p><footer className="mt-7 flex items-center gap-3">{review.f ? <Image src={review.f} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /> : <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b6cd72] text-xs font-bold uppercase text-[#425f32]" aria-hidden="true">{review.n.slice(0, 1)}</span>}<div><b className="block text-xs uppercase tracking-[.12em]">{review.n}</b><span className="text-xs text-black/45">{review.c}</span></div></footer></blockquote>
-            ))}
+            {reviews.map((review) => {
+              const formattedDate = formatReviewDate(review.createdAt);
+
+              return (
+                <blockquote key={review.id} className="relative bg-white p-8 shadow-[0_20px_50px_rgb(30_42_25/0.08)] sm:p-10">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="text-sm tracking-[.18em] text-[#79924f]">{"★".repeat(review.rating)}<span className="text-black/15">{"★".repeat(5 - review.rating)}</span></div>
+                    {formattedDate ? <time dateTime={review.createdAt} className="text-right text-[10px] font-bold uppercase tracking-[.16em] text-black/35">{formattedDate}</time> : null}
+                  </div>
+                  <p className="mt-5 text-lg leading-8 text-black/65">“{review.q}”</p>
+                  <footer className="mt-7 flex items-center gap-3">{review.f ? <Image src={review.f} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /> : <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#b6cd72] text-xs font-bold uppercase text-[#425f32]" aria-hidden="true">{review.n.slice(0, 1)}</span>}<div><b className="block text-xs uppercase tracking-[.12em]">{review.n}</b><span className="text-xs text-black/45">{review.c}</span></div></footer>
+                </blockquote>
+              );
+            })}
           </div>
         </div>
       </section>
