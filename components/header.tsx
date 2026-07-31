@@ -66,7 +66,7 @@ export default function Header({
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center gap-4">
             <a href="https://wa.link/v1x5pl" className={`${overlay ? "border-white/60 text-white hover:bg-white hover:text-[#263b27]" : "border-[#425f32] text-[#425f32]"} hidden border px-5 py-2.5 text-[10px] font-bold uppercase tracking-[.18em] sm:inline-flex`}>
-              WhatsApp Personal Guide
+              ASK YOUR GUIDE
             </a>
 
             {/* Mobile Menu Button */}

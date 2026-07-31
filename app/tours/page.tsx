@@ -172,7 +172,7 @@ export default function ToursPage() {
             <p className="mt-6 max-w-xl text-sm leading-7 text-white/65">Tell us what you want to see, where you are staying and how active you want the day to feel. We&apos;ll connect the stops into a realistic private route.</p>
           </div>
           <div className="lg:text-right">
-            <a href="https://wa.me/6281237812783?text=Hi%20Bobby%2C%20I%27d%20like%20to%20build%20a%20custom%20Bali%20VW%20tour." className="btn-primary bg-[#79924f] px-8 py-4">Build my route <span aria-hidden>↗</span></a>
+            <a href="https://www.balisafari.tours" className="btn-primary bg-[#79924f] px-8 py-4">Build my route <span aria-hidden>↗</span></a>
           </div>
         </div>
       </section>

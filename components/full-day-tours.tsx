@@ -8,7 +8,7 @@ const tours = [
     image: "/tourpics/ubud-market.jpg",
     description:
       "Visit Ubud's villages, temples, rice terraces and creative heart in a classic open-top Volkswagen.",
-    price: 700,
+    price: 40,
   },
   {
     name: "Kintamani Volcano Tours",
@@ -16,7 +16,7 @@ const tours = [
     image: "/tourpics/volcano.jpg",
     description:
       "Climb into the cool highlands for Mount Batur views, village roads, rice terraces and sacred springs.",
-    price: 700,
+    price: 40,
   },
   {
     name: "Uluwatu Tours",
@@ -24,7 +24,7 @@ const tours = [
     image: "/tourpics/uluwatu.jpg",
     description:
       "Follow the coast to Uluwatu Temple for Indian Ocean views, roaming monkeys and a golden-hour drive.",
-    price: 700,
+    price: 40,
   },
 ] as const;
 
@@ -94,7 +94,7 @@ export default function FullDayTours() {
                     <p className="text-right text-[10px] font-bold uppercase tracking-[.14em] text-black/40">
                       Best price!
                       <span className="mt-1 block font-[family-name:var(--font-display)] text-2xl font-black tracking-normal text-[#425f32]">
-                        Rp {tour.price} <span className="text-sm">/ person</span>
+                        USD$ {tour.price} <span className="text-sm">/ person</span>
                       </span>
                     </p>
                   </div>
@@ -105,7 +105,7 @@ export default function FullDayTours() {
         </div>
 
         <p className="mx-auto mt-9 max-w-2xl text-center text-xs leading-5 text-black/45">
-          Tour pricing is shown in Rp 100K. Small children are free.
+          Tour pricing in Rp is 700,000. Small children are free. Hotel/Villa pickup and dropoff included!
         </p>
       </div>
     </section>
