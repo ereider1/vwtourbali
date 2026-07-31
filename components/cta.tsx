@@ -9,7 +9,7 @@ export default function CTA() {
           Book your Island Safari Volkswagen tour today and create unforgettable memories in Bali.
         </p>
         <button className="bg-white text-primary-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
-          Book Now
+          Reserve your tour
         </button>
       </div>
     </section>

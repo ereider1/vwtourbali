@@ -8,7 +8,7 @@ const tours = [
     image: "/tourpics/ubud-market.jpg",
     description:
       "Visit Ubud's villages, temples, rice terraces and creative heart in a classic open-top Volkswagen.",
-    price: 60,
+    price: 700,
   },
   {
     name: "Kintamani Volcano Tours",
@@ -16,7 +16,7 @@ const tours = [
     image: "/tourpics/volcano.jpg",
     description:
       "Climb into the cool highlands for Mount Batur views, village roads, rice terraces and sacred springs.",
-    price: 60,
+    price: 700,
   },
   {
     name: "Uluwatu Tours",
@@ -24,7 +24,7 @@ const tours = [
     image: "/tourpics/uluwatu.jpg",
     description:
       "Follow the coast to Uluwatu Temple for Indian Ocean views, roaming monkeys and a golden-hour drive.",
-    price: 70,
+    price: 700,
   },
 ] as const;
 
@@ -56,7 +56,7 @@ export default function FullDayTours() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {tours.map((tour, index) => {
             const message = encodeURIComponent(
-              `Hi Bobby, I'm interested in the ${tour.name} at USD ${tour.price} per person. Could you help me plan it?`,
+              `Hi Bobby, I'm interested in the ${tour.name} at Rp ${tour.price} per person. Could you help me plan it?`,
             );
 
             return (
@@ -88,13 +88,13 @@ export default function FullDayTours() {
                   <p className="mt-4 text-sm leading-6 text-black/55">{tour.description}</p>
 
                   <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-6">
-                    <a href={`${whatsappBase}${message}`} className="btn-primary px-5 py-3">
-                      Book now <span aria-hidden>↗</span>
+                    <a href={`${whatsappBase}${message}`} className="btn-primary px-3 py-3">
+                      Reserve Tour <span aria-hidden>↗</span>
                     </a>
                     <p className="text-right text-[10px] font-bold uppercase tracking-[.14em] text-black/40">
-                      From
+                      Best price!
                       <span className="mt-1 block font-[family-name:var(--font-display)] text-2xl font-black tracking-normal text-[#425f32]">
-                        USD {tour.price} <span className="text-sm">/ person</span>
+                        Rp {tour.price} <span className="text-sm">/ person</span>
                       </span>
                     </p>
                   </div>
@@ -105,7 +105,7 @@ export default function FullDayTours() {
         </div>
 
         <p className="mx-auto mt-9 max-w-2xl text-center text-xs leading-5 text-black/45">
-          Private-tour pricing is shown per person. Final price may vary with pickup area, group size and custom stops.
+          Tour pricing is shown in Rp 100K. Small children are free.
         </p>
       </div>
     </section>

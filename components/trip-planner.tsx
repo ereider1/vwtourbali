@@ -272,6 +272,9 @@ export default function TripPlanner() {
           )}
         </section>
 
+
+
+
         <div id="itineraries" className="mt-28 scroll-mt-24">
           <div className="mb-10 text-center"><p className="script text-4xl">How much Bali fits?</p><h2 className="font-[family-name:var(--font-display)] text-4xl font-black uppercase tracking-tight sm:text-5xl">Plan by trip length</h2></div>
           <div className="grid gap-5 lg:grid-cols-3">
@@ -292,6 +295,9 @@ export default function TripPlanner() {
             ))}
           </div>
         </div>
+
+
+        
 
         <div className="mt-20 border-t border-black/10 pt-8 text-center">
           <p className="text-xs leading-6 text-black/45">
