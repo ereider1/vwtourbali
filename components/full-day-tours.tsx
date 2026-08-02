@@ -105,7 +105,7 @@ export default function FullDayTours() {
         </div>
 
         <p className="mx-auto mt-9 max-w-2xl text-center text-xs leading-5 text-black/45">
-          Tour pricing in Rp is 700,000. Small children are free. Hotel/Villa pickup and dropoff included!
+          Tour pricing in Rp is 700,000. Small children are free. Hotel/Villa pickup and dropoff included.
         </p>
       </div>
     </section>
