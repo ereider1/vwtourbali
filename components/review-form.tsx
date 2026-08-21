@@ -7,6 +7,43 @@ const whatsappNumber = "6281237812783";
 
 const inputClass = "mt-2 w-full border-b border-black/20 bg-transparent px-0 py-3 text-sm outline-none transition placeholder:text-black/35 focus:border-[#425f32]";
 const labelClass = "text-[10px] font-bold uppercase tracking-[.18em] text-black/55";
+const countryOptions = [
+  "Australia",
+  "Austria",
+  "Belgium",
+  "Brazil",
+  "Canada",
+  "China",
+  "Denmark",
+  "Finland",
+  "France",
+  "Germany",
+  "India",
+  "Indonesia",
+  "Ireland",
+  "Italy",
+  "Japan",
+  "Malaysia",
+  "Mexico",
+  "Netherlands",
+  "New Zealand",
+  "Norway",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Singapore",
+  "South Korea",
+  "Spain",
+  "Sweden",
+  "Switzerland",
+  "Taiwan",
+  "Thailand",
+  "United Kingdom",
+  "United States",
+  "United Arab Emirates",
+  "Vietnam",
+  "Other / region",
+];
 
 export default function ReviewForm() {
   const [rating, setRating] = useState(5);
@@ -130,7 +167,7 @@ export default function ReviewForm() {
 
       <div className="mt-8 grid gap-7 sm:grid-cols-2">
         <label className="block"><span className={labelClass}>Your name *</span><input className={inputClass} name="name" required placeholder="The name you'd like us to use" /></label>
-        <label className="block"><span className={labelClass}>Country / region</span><input className={inputClass} name="country" placeholder="Optional — where are you from?" /></label>
+        <label className="block"><span className={labelClass}>Country / region</span><select className={inputClass} name="country" defaultValue=""><option value="">Optional — select your country</option>{countryOptions.map((country) => <option key={country}>{country}</option>)}</select></label>
         <label className="block"><span className={labelClass}>Which tour did you take? *</span><select className={inputClass} name="tour" required defaultValue=""><option value="" disabled>Select a route</option><option>Bali Temples Tour</option><option>Bali Waterfall Tour</option><option>Kintamani Volcano Tour</option><option>Uluwatu Sunset Tour</option><option>Bali Swing and Ubud Tour</option><option>Jatiluwih & Tanah Lot Tour</option><option>Gates of Heaven Tour</option><option>A custom / private route</option></select></label>
         <label className="block"><span className={labelClass}>When did you travel?</span><input className={inputClass} name="date" type="date" /></label>
       </div>
