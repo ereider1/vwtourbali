@@ -1,5 +1,6 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
+import { registerUploadedPhoto } from "@/lib/gallery";
 
 const allowedContentTypes = ["image/jpeg", "image/png", "image/webp"];
 
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
         };
       },
       onUploadCompleted: async ({ blob }) => {
-        void blob;
+        await registerUploadedPhoto(blob);
       },
     });
 

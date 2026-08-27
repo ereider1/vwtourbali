@@ -4,35 +4,22 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { SITES } from "@/lib/domains";
 
-const captions: string[] = [
-
-
-];
-
-const guestPhotos = Array.from({ length: 26 }, (_, i) => {
-  const n = String(i + 1).padStart(2, "0");
-  return {
-    src: `/gallerypics/bali_vw_${n}.jpg`,
-    alt: captions[i] ?? `Guests on a VW Bali safari tour 2026, photo ${n}`,
-  };
-});
-
-type UploadedGuestPhoto = {
+type GuestPhoto = {
+  id: string;
   src: string;
   alt: string;
+  isPublished?: boolean;
 };
 
 export default function GuestShowcase() {
-  const [uploadedPhotos, setUploadedPhotos] = useState<UploadedGuestPhoto[]>([]);
+  const [guestPhotos, setGuestPhotos] = useState<GuestPhoto[]>([]);
 
   useEffect(() => {
     fetch("/api/review-photos")
       .then((response) => (response.ok ? response.json() : { photos: [] }))
-      .then((data: { photos?: UploadedGuestPhoto[] }) => setUploadedPhotos(data.photos ?? []))
-      .catch(() => setUploadedPhotos([]));
+      .then((data: { photos?: GuestPhoto[] }) => setGuestPhotos(data.photos ?? []))
+      .catch(() => setGuestPhotos([]));
   }, []);
-
-  const allGuestPhotos = [...uploadedPhotos, ...guestPhotos];
 
   return (
     <section id="content" className="py-24 lg:py-32">
@@ -43,7 +30,7 @@ export default function GuestShowcase() {
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
-          {allGuestPhotos.map((photo, index) => (
+          {guestPhotos.map((photo, index) => (
             <div
               key={photo.src}
               className={`${index === 0 || index === 9 || index === 18 ? "col-span-2 row-span-2" : ""} group relative aspect-square overflow-hidden bg-[#263b27]`}

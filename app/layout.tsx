@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Caveat, Geist, Oswald } from "next/font/google";
 import { headers } from "next/headers";
 import { siteForHost } from "@/lib/domains";
@@ -139,7 +140,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><ClerkProvider dynamic>{children}</ClerkProvider></body>
     </html>
   );
 }
