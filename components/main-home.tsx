@@ -1,14 +1,8 @@
 import Image from "next/image";
 import Header from "@/components/header";
 import FullDayTours from "@/components/full-day-tours";
+import PhotoGallery from "@/components/photo-gallery";
 import { listPublishedReviews, type PublishedReview } from "@/lib/reviews";
-
-const moments = [
-  { image: "/gallerypics/bali_vw_08.jpg", title: "Village roads", label: "Slow travel" },
-  { image: "/gallerypics/bali_vw_13.jpg", title: "Temple mornings", label: "Local culture" },
-  { image: "/gallerypics/bali_vw_18.jpg", title: "Top-down days", label: "The VW feeling" },
-  { image: "/gallerypics/bali_vw_22.jpg", title: "Golden hour", label: "Worth the detour" },
-];
 
 const featuredReviews: PublishedReview[] = [
   { id: "sarah-j", q: "The most memorable day of our Bali trip. Bobby took us down roads we never would have found, and the car made everyone smile.", n: "Sarah J.", c: "United States", f: "/flags/US.svg", rating: 5, createdAt: "2026-01-01" },
@@ -91,24 +85,7 @@ export default async function MainHome() {
         </div>
       </section>
 
-      <section id="gallery" className="py-24 lg:py-32">
-        <div className="container-max container-padding">
-          <div className="mb-12 text-center">
-            <p className="script text-4xl">The good stuff</p>
-            <h2 className="font-[family-name:var(--font-display)] text-4xl font-black uppercase tracking-tight sm:text-5xl">Moments from the road</h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-black/55">Real days, real guests, and the little unscheduled stops that make the story.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {moments.map((moment, index) => (
-              <figure key={moment.title} className={`${index % 2 ? "lg:mt-10" : ""} group relative aspect-[3/4] overflow-hidden`}>
-                <Image src={moment.image} alt={moment.title} fill className="object-cover transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <figcaption className="absolute inset-x-0 bottom-0 p-5 text-white"><span className="text-[9px] font-bold uppercase tracking-[.2em] text-white/60">{moment.label}</span><h3 className="font-[family-name:var(--font-display)] text-2xl font-bold uppercase">{moment.title}</h3></figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PhotoGallery />
 
       <section id="reviews" className="relative overflow-hidden bg-[#f0eee5] py-24">
         <div className="container-max container-padding">
