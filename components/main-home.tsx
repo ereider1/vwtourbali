@@ -61,7 +61,7 @@ export default async function MainHome() {
             <p className="mt-8 max-w-xl text-base leading-7 text-white/80 sm:text-lg">Leave the tour-bus route behind. Ride through rice fields, temple villages and mountain roads in an original open-top Volkswagen with a local driver-guide.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#tours" className="btn-primary bg-[#718b4c]">Explore the routes <span aria-hidden>↘</span></a>
-              <a href="https://wa.me/6281237812783" className="btn-outline">Talk to Bobby</a>
+              <a href="#vwdriver" className="btn-outline">Just want a VW Driver?</a>
             </div>
           </div>
         </div>
@@ -69,6 +69,26 @@ export default async function MainHome() {
       </div>
 
       <FullDayTours />
+
+
+
+
+      <section id="vwdriver" className="relative min-h-[400px] overflow-hidden bg-[#fcfcfc] text-white">
+        
+        <div className="container-max container-padding relative z-10 flex min-h-[400px] items-center py-28">
+          <div className="max-w-3xl">
+            <p className="script text-4xl text-[#b6cd72]">Just Want a VW Convertible Driver?</p>
+            <h2 className="mt-1 font-[family-name:var(--font-display)] text-gray-600 text-5xl font-black uppercase leading-[.9] tracking-tight sm:text-7xl">Run your errands<br />in our VW Convertibles!</h2>
+            <p className="mt-7 max-w-xl text-base leading-7 text-gray-500">One-way, pick-up & drop-off, anywhere, any amount of time. We will take you where you want to go! We will wait for you to shop, eat, party... Let's Go!</p>
+            <div className="mt-4">
+<a href="https://wa.me/6281237812783?text=Hi%20Bobby%2C%20I%27d%20like%20to%20plan%20a%20private%20VW%20tour%20in%20Bali." className="btn-primary bg-[#79924f] px-8 py-4">Plan on WhatsApp <span aria-hidden>↗</span></a>
+</div>
+          </div>
+        </div>
+      </section>
+
+
+
 
       <section id="why-us" className="paper-edge relative min-h-[660px] overflow-hidden bg-[#425f32] text-white">
         <Image src="/gallerypics/bali_vw_16.jpg" alt="Bali countryside seen from a classic VW" fill className="object-cover object-center opacity-45" />
@@ -84,6 +104,11 @@ export default async function MainHome() {
           </div>
         </div>
       </section>
+
+
+
+
+
 
       <PhotoGallery />
 
